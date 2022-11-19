@@ -103,10 +103,10 @@ bool isPointInArea (int x, int y)
     d2 = signOfPoint(pt, v2, v3);
     d3 = signOfPoint(pt, v3, v1);
 
-    t = (d1 < 0) || (d2 < 0) || (d3 < 0);
-    f = (d1 > 0) || (d2 > 0) || (d3 > 0);
+    t = (d1 > 0) && (d2 > 0) && (d3 > 0);
+    f = (d1 < 0) && (d2 < 0) && (d3 < 0);
 
-    return !(f && t);
+    return (f || t);
 }
 
 
