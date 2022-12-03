@@ -46,9 +46,8 @@ __Будем считывать входные данные по одному с
 |  Ввод  | Вывод |
 |:------------- | -------------:|
 | 12 34 56 78 90 | 2 |
-| jweic n32iu vcr3jiv43nf9384fndk jv349vnsdvkj3v9fkn
-  56  gij eofjvv3 or 32 3fno5iv rjbrtb 45    k | 1335577991 |
-|  |  |
+| jweic n32iu vcr3jiv43nf9384fndk jv349vnsdvkj3v9fkn 56  gij eofjvv3 or 32 3fno5iv rjbrtb 45    k | 3 |
+| 1 12 123 12345 | 1 |
 ### 8. Распечатка протокола
 ```
 #include <stdio.h>
