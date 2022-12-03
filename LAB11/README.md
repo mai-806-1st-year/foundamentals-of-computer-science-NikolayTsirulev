@@ -45,55 +45,78 @@ __Будем считывать входные данные по одному с
  Тесты:
 |  Ввод  | Вывод |
 |:------------- | -------------:|
-| 02468 | 13579 |
-| 1234567890 | 1335577991 |
+| 12 34 56 78 90 | 2 |
+| jweic n32iu vcr3jiv43nf9384fndk jv349vnsdvkj3v9fkn
+  56  gij eofjvv3 or 32 3fno5iv rjbrtb 45    k | 1335577991 |
 |  |  |
 ### 8. Распечатка протокола
 ```
 #include <stdio.h>
 #include <stdbool.h>
-bool isitOct(char x) {
-    bool y;
-    char arr[9] ={'0','1','2','3','4','5','6','7'};
-    for (int i = 1; i <= 9; i++) {
-        if (x == arr[i]) {
-            y = true;
-            break;
-        } else y = false;
-    }
-    return y;
-}
-int main()
-{
-    int prev = 0;
-    int cur = 0;
-    int res = 0;
-    int aint = 0;
-    int sign =1;
-    char a = getchar();
-    while (a != EOF){
-        prev = cur;
-        if (isitOct(a))
-        {
-            aint = a - '0';
-            cur = prev*10 + aint;
-        } else {
-            if (prev < 1750 && prev > 12 && sign != -1) res = res + 1;
-            cur = 0;
-            prev = 0;
-            sign = 1;
-            if (a == '-') sign = -1;
-        }
-        a = getchar();
-        aint = 0;
-    }
-    if (cur !=0)
-    {
-        prev = cur;
-        if (prev < 1750 && prev > 12) res = res + 1;
-    }
-    printf("%d", res);
+#include <ctype.h>
 
+bool isOct(char x) {
+    if ((x - '0') >= 0 && (x - '0') <= 7) return true;
+    return false;
+}
+typedef enum {
+    OUT,//слово, которое нужно пропустить
+    IN_DIGIT,//нужное слово
+    SPACE//пробел или переход строки
+} state;
+
+int main() {
+    state state = OUT;
+    int res = 0;
+    int num = 0;
+    int space = 0;
+    int sign = 1;
+    int i = 0;
+    for (char a = getchar(); a != EOF; a = getchar()) {
+        if (i == 0) i = 1; else i = 2;
+        switch (state) {
+            case OUT:
+                if (isOct(a)) state = IN_DIGIT;
+                else if (a == ' ' || a == '\n') {
+                    state = SPACE;
+                } else {
+                    if (a == '-' && space == 1) sign = -1;
+                    num = 0;
+                    state = OUT;
+                    break;
+                }
+            case IN_DIGIT:
+                if (isOct(a)) {
+                    if (space == 1 || i == 1) {
+                        num = num*8 + a - '0';
+                        space = 0;
+                        state = OUT;
+                        break;
+                    }else if (space == 0 && num != 0) {
+                        num = num*8 + a - '0';
+                        state = OUT;
+                        break;
+                    } else if (space == 0 && num == 0) {
+                        num = 0;
+                        state = OUT;
+                        break;
+                    }
+                }
+            case SPACE:
+                if (num*sign < 1000 && num*sign > 10) {
+                    res++;
+                }
+                sign = 1;
+                space = 1;
+                num = 0;
+                state = OUT;
+                break;
+        }
+    }
+    if (num*sign < 1000 && num*sign > 10) {
+                    res++;
+                }
+    printf ("%d", res);
     return 0;
 }
 ```
