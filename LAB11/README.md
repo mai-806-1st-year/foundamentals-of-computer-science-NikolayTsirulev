@@ -46,8 +46,8 @@ __Будем считывать входные данные по одному с
 |  Ввод  | Вывод |
 |:------------- | -------------:|
 | 12 34 56 78 | 2 |
-| jvner 83jvnf9u nf93 rivn39r vjkfnv 45 r3 9vi3nv 67 9dkjmn j | 2 |
-| 1 12 123 1234 ab a12 b234 | 3 |
+| 34 76 | 2 |
+| 17 16 123 1234234 | 3 |
 
 ### 8. Распечатка протокола
 ```
@@ -65,7 +65,7 @@ typedef enum {
     SPACE//пробел или переход строки
 } state;
 
-int main() {
+int number_of_octal(){
     state state = OUT;
     int res = 0;
     int num = 0;
@@ -88,12 +88,14 @@ int main() {
             case IN_DIGIT:
                 if (isOct(a)) {
                     if (space == 1 || i == 1) {
-                        num = num*8 + a - '0';
+                        if (a == '0') num = num*8; else
+                            num = num*8 + a - '0';
                         space = 0;
                         state = OUT;
                         break;
-                    }else if (space == 0 && num != 0) {
-                        num = num*8 + a - '0';
+                    } else if (space == 0 && num != 0) {
+                        if (a == '0') num = num*8; else
+                            num = num*8 + a - '0';
                         state = OUT;
                         break;
                     } else if (space == 0 && num == 0) {
@@ -114,9 +116,14 @@ int main() {
         }
     }
     if (num*sign < 1000 && num*sign > 10) {
-                    res++;
-                }
-    printf ("%d", res);
+        res++;
+    }
+    return res;
+}
+
+int main()
+{
+    printf("%d", number_of_octal());
     return 0;
 }
 ```
