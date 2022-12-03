@@ -1,3 +1,12 @@
+ Тесты:
+|  Ввод  | Вывод |
+|:------------- | -------------:|
+| aba aa aa bbb | yes, there is a word here containing one consonant |
+| abc ooo ddd dcd | no, there are no words containing one consonant |
+| a b c | yes, there is a word here containing one consonant |
+
+
+```
 #include <stdio.h>
 #include <stdbool.h>
 #include <ctype.h>
@@ -59,3 +68,4 @@ int main(){
         printf("yes, there is a word here containing one consonant\n");
     } else printf("no, there are no words containing one consonant\n");
 }
+```
