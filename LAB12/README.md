@@ -59,9 +59,7 @@ typedef enum {
     OUT,
     IN_DIGIT
 } state;
-
-
-int main() {
+int odd_number_increment(){
     state state = OUT;
     for (char a = getchar(); a != EOF; a = getchar()) {
         switch (state) {
@@ -75,11 +73,16 @@ int main() {
             case IN_DIGIT:
                 if (isEven(a)) {
                     printf("%d", a - '0' + 1);
-                } else putchar(a);
+                } else 
+                    putchar(a);
                 state = OUT;
                 break;
         }
     }
+}
+
+int main() {
+    odd_number_increment();
     return 0;
 }
 ```
