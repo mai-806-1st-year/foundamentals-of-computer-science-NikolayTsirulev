@@ -4,7 +4,7 @@ enum { maxn = 100 };
 void matInput(int n, int (*mat)[n]);
 void matSolve(int n, int (*mat)[n]);
 
-int main(void){
+int main(void) {
     int mat[maxn][maxn];
     int n;
     scanf("%d", &n);
