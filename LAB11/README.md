@@ -57,8 +57,7 @@ __Будем считывать входные данные по одному с
 #include <ctype.h>
 
 bool isOct(char x) {
-    if ((x - '0') >= 0 && (x - '0') <= 7) return true;
-    return false;
+    return ((x - '0') >= 0 && (x - '0') <= 7);
 }
 typedef enum {
     OUT,
