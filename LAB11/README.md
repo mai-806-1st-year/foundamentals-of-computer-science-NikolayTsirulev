@@ -61,9 +61,9 @@ bool isOct(char x) {
     return false;
 }
 typedef enum {
-    OUT,//слово, которое нужно пропустить
-    IN_DIGIT,//нужное слово
-    SPACE//пробел или переход строки
+    OUT,
+    IN_DIGIT,
+    SPACE
 } state;
 
 int number_of_octal(){
