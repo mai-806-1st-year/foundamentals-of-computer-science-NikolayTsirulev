@@ -65,7 +65,7 @@ __Считаем матрицу в двумерный массив, выведе
 
 
 ### 8. Распечатка протокола
-```./fundamentals-of-computer-science-NikolayTsirulev/LAB15/lab15.c 
+```C:fundamentals-of-computer-science-NikolayTsirulev/LAB15/lab15.c 
 ```
 
 
@@ -74,7 +74,7 @@ __Считаем матрицу в двумерный массив, выведе
 
 
 
-```
+```C:
 #include <stdio.h>
 
 enum { maxn = 100 };
