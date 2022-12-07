@@ -65,7 +65,7 @@ __Считаем матрицу в двумерный массив, выведе
 
 
 ### 8. Распечатка протокола
-```C:fundamentals-of-computer-science-NikolayTsirulev/LAB15/lab15.c
+```c: fundamentals-of-computer-science-NikolayTsirulev/LAB15/lab15.c 
 ```
 
 
