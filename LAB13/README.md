@@ -6,7 +6,7 @@
 | a b c | yes, there is a word here containing one consonant |
 
 
-```
+```С
 #include <stdio.h>
 #include <stdbool.h>
 #include <ctype.h>
