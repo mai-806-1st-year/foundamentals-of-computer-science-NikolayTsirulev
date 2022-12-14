@@ -42,6 +42,59 @@ __Считаем матрицу в двумерный массив, выведе
 2) Создадим функцию ```matOutput```, которая будет выводить матрицу помощью вложенных циклов.
 3) Создадим функцию ```minElem```, которая будет считать минимальный элемент матрицы.
 4) Создадим функцию ```matReverseOrder```, которая будет изменять матрицу, приводить к виду, указанному в задании, и выводить измененную матрицу, используя вложенные циклы и функции: ```matOutput``` и ```minElem```.
+```C
+#include <stdio.h>
+#include <limits.h>
+
+enum { maxn = 100 };
+void matInput(int n, int (*mat)[n]);
+void matOutput(int n, int (*mat)[n]);
+void matReverseOrder(int n, int (*mat)[n]);
+
+int main(void) {
+    int mat[maxn][maxn];
+    int n;
+    scanf("%d", &n);
+    matInput(n, (int (*)[n]) mat);
+    matReverseOrder(n, (int (*)[n]) mat);
+}
+
+void matInput(int n, int (*mat)[n]){
+    for (int i = 0; i != n; ++i)
+        for (int j = 0; j != n; ++j)
+            scanf("%d", &mat[i][j]);
+}
+
+void matOutput(int n, int (*mat)[n]){
+    for (int i = 0; i != n; ++i) {
+        for (int j = 0; j != n; ++j)
+            printf("%d ", mat[i][j]);
+        printf("\n");
+    }
+}
+
+int minElem(int n, int (*mat)[n]){ //searches for the minimum element in the matrix
+    int res = INT_MAX;
+    for (int i = 0; i != n; ++i)
+        for (int j = 0; j != n; ++j)
+            if (mat[i][j] < res) res = mat[i][j];
+    return res;
+}
+void matReverseOrder(int n, int (*mat)[n]){ //prints a matrix where the row elements with the minimum element are rearranged in reverse order
+    for (int i = 0; i != n; ++i)
+        for (int j = 0; j != n; ++j)
+            if (mat[i][j] == minElem(n, (int (*)[n]) mat)) {
+                for (int k = 0; k!=(n / 2); ++k) {
+                    int temp = mat[i][k];
+                    mat[i][k] = mat[i][n - k - 1];
+                    mat[i][n - k - 1] = temp;
+                    temp = 0;
+                }
+                matOutput(n, (int (*)[n]) mat);
+                return;
+            }
+}
+```
 
  Тесты: 
  Ввод:
@@ -88,60 +141,43 @@ __Считаем матрицу в двумерный массив, выведе
  
 
 ### 8. Распечатка протокола
-
-```C
-#include <stdio.h>
-
-enum { maxn = 100 };
-void matInput(int n, int (*mat)[n]);
-void matOutput(int n, int (*mat)[n]);
-void matReverseOrder(int n, int (*mat)[n]);
-
-int main(void) {
-    int mat[maxn][maxn];
-    int n;
-    scanf("%d", &n);
-    matInput(n, (int (*)[n]) mat);
-    matReverseOrder(n, (int (*)[n]) mat);
-}
-
-void matInput(int n, int (*mat)[n]){
-    for (int i = 0; i != n; ++i)
-        for (int j = 0; j != n; ++j)
-            scanf("%d", &mat[i][j]);
-}
-
-void matOutput(int n, int (*mat)[n]){
-    for (int i = 0; i != n; ++i) {
-        for (int j = 0; j != n; ++j)
-            printf("%d ", mat[i][j]);
-        printf("\n");
-    }
-}
-
-int minElem(int n, int (*mat)[n]){ //searches for the minimum element in the matrix
-    int res = 0x7FFFFFFF;
-    for (int i = 0; i != n; ++i)
-        for (int j = 0; j != n; ++j)
-            if (mat[i][j] < res) res = mat[i][j];
-    return res;
-}
-void matReverseOrder(int n, int (*mat)[n]){ //prints a matrix where the row elements with the minimum element are rearranged in reverse order
-    for (int i = 0; i != n; ++i)
-        for (int j = 0; j != n; ++j)
-            if (mat[i][j] == minElem(n, (int (*)[n]) mat)) {
-                for (int k = 0; k!=(n / 2); ++k) {
-                    int temp = mat[i][k];
-                    mat[i][k] = mat[i][n - k - 1];
-                    mat[i][n - k - 1] = temp;
-                    temp = 0;
-                }
-                matOutput(n, (int (*)[n]) mat);
-                return;
-            }
-}
-```
-
+ ```
+hackerman@WARMACHINE_mini:~/labs$ nano lab15.c
+hackerman@WARMACHINE_mini:~/labs$ nano test1.txt
+hackerman@WARMACHINE_mini:~/labs$ cat test1.txt
+5
+0  1  2  3  4
+5  6  7  8  9
+10 11 12 13 14
+15 16 17 18 19
+20 21 22 23 24
+hackerman@WARMACHINE_mini:~/labs$ gcc -std=c18 lab15.c
+hackerman@WARMACHINE_mini:~/labs$ ./a.out < test1.txt
+4 3 2 1 0
+5 6 7 8 9
+10 11 12 13 14
+15 16 17 18 19
+20 21 22 23 24
+hackerman@WARMACHINE_mini:~/labs$ nano test2.txt
+hackerman@WARMACHINE_mini:~/labs$ cat test2.txt
+2
+345 76
+87 2134
+hackerman@WARMACHINE_mini:~/labs$ ./a.out < test2.txt
+76 345
+87 2134
+hackerman@WARMACHINE_mini:~/labs$ nano test3.txt
+hackerman@WARMACHINE_mini:~/labs$ cat test3.txt
+3
+6 7 8
+7 8 6
+10 9 8
+hackerman@WARMACHINE_mini:~/labs$ ./a.out < test3.txt
+8 7 6
+7 8 6
+10 9 8
+hackerman@WARMACHINE_mini:~/labs$
+ ```
 
 ### 9. Дневник отладки
 
