@@ -42,59 +42,8 @@ __Считаем матрицу в двумерный массив, выведе
 2) Создадим функцию ```matOutput```, которая будет выводить матрицу помощью вложенных циклов.
 3) Создадим функцию ```minElem```, которая будет считать минимальный элемент матрицы.
 4) Создадим функцию ```matReverseOrder```, которая будет изменять матрицу, приводить к виду, указанному в задании, и выводить измененную матрицу, используя вложенные циклы и функции: ```matOutput``` и ```minElem```.
-```C
-#include <stdio.h>
-#include <limits.h>
 
-enum { maxn = 100 };
-void matInput(int n, int (*mat)[n]);
-void matOutput(int n, int (*mat)[n]);
-void matReverseOrder(int n, int (*mat)[n]);
-
-int main(void) {
-    int mat[maxn][maxn];
-    int n;
-    scanf("%d", &n);
-    matInput(n, (int (*)[n]) mat);
-    matReverseOrder(n, (int (*)[n]) mat);
-}
-
-void matInput(int n, int (*mat)[n]){
-    for (int i = 0; i != n; ++i)
-        for (int j = 0; j != n; ++j)
-            scanf("%d", &mat[i][j]);
-}
-
-void matOutput(int n, int (*mat)[n]){
-    for (int i = 0; i != n; ++i) {
-        for (int j = 0; j != n; ++j)
-            printf("%d ", mat[i][j]);
-        printf("\n");
-    }
-}
-
-int minElem(int n, int (*mat)[n]){ //searches for the minimum element in the matrix
-    int res = INT_MAX;
-    for (int i = 0; i != n; ++i)
-        for (int j = 0; j != n; ++j)
-            if (mat[i][j] < res) res = mat[i][j];
-    return res;
-}
-void matReverseOrder(int n, int (*mat)[n]){ //prints a matrix where the row elements with the minimum element are rearranged in reverse order
-    for (int i = 0; i != n; ++i)
-        for (int j = 0; j != n; ++j)
-            if (mat[i][j] == minElem(n, (int (*)[n]) mat)) {
-                for (int k = 0; k!=(n / 2); ++k) {
-                    int temp = mat[i][k];
-                    mat[i][k] = mat[i][n - k - 1];
-                    mat[i][n - k - 1] = temp;
-                    temp = 0;
-                }
-                matOutput(n, (int (*)[n]) mat);
-                return;
-            }
-}
-```
+https://github.com/mai-806-1st-year/fundamentals-of-computer-science-NikolayTsirulev/blob/d9da2c6c6ec072f9272140ab27597c06bba09699/LAB15/lab15.c#L1-L50
 
  Тесты: 
  Ввод:
