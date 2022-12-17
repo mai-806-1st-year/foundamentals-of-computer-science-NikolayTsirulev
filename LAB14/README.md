@@ -46,44 +46,7 @@ __Считаем матрицу в двумерный массив, выведе
 1) Создадим функцию ```matInput```, которая будет считывать с клавиатуры элементы матрицы по одному с помощью вложенных циклов.
 2) Создадим функцию ```matSolve```, которая будет выводить элементы матрицы в нужном порядке, используя вложенные циклы.
 
-```C
-#include <stdio.h>
-
-enum { maxn = 100 };
-void matInput(int n, int (*mat)[n]);
-void matSolve(int n, int (*mat)[n]);
-
-int main(void) {
-    int mat[maxn][maxn];
-    int n;
-    scanf("%d", &n);
-    matInput(n, (int (*)[n]) mat);
-    matSolve(n, (int (*)[n]) mat);
-}
-
-void matInput(int n, int (*mat)[n]){
-    for (int i = 0; i != n; ++i)
-        for (int j = 0; j != n; ++j)
-            scanf("%d", &mat[i][j]);
-}
-
-void matSolve(int n, int (*mat)[n]){
-    int k = n - 1;
-    for (int i = 0; i <= n / 2 - 1; ++i) {
-        for (int j = i; j <= k - 1; ++j)
-            printf("%d ", mat[j][i]);
-        for (int j = i; j <= k - 1; ++j)
-            printf("%d ", mat[k][j]);
-        for (int j = k; j >= i + 1; j -= 1)
-            printf("%d ", mat[j][k]);
-        for (int j = k; j >= i + 1; j -= 1)
-            printf("%d ", mat[i][j]);
-        k -= 1;
-    }
-    if (n % 2 != 0)
-        printf("%d\n", mat[n / 2][n / 2]);
-}
-```
+https://github.com/mai-806-1st-year/fundamentals-of-computer-science-NikolayTsirulev/blob/8e8d85977dfe7257f8373ed78492f7ab92778d0a/LAB14/lab14.c#L1-L36
 
  Тесты:
 Ввод:
