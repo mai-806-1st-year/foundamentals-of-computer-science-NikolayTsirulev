@@ -29,7 +29,7 @@ int main() {
     const int steps = 15;
     const int max_iters = 100;
 
-    ld step = (b-a) / steps;
+    ld step = (b - a) / steps;
     ld eps = compute_epsilon();
 
     printf("Machine epsilon for long double for this system is %.20Lf\n", eps);
@@ -44,7 +44,7 @@ int main() {
         ld sum = 0;
         long long factorial = 1;
         ld temp = 1;
-        while ((fabsl(cur_member) > eps * k && n < max_iters) || n == 2) {
+        while ((fabsl(cur_member) > sqrt(eps) * k && n < max_iters) || n == 2) {
             n0 *= -1;
             cur_member = teilor_member(x, n , factorial, temp, n0);
             factorial *= (n + 1);
