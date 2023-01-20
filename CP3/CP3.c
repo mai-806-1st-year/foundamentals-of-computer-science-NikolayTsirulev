@@ -14,8 +14,8 @@ ld inner_func(ld x){
     return (1 + x) * expl(-x);
 }
 
-ld teilor_member(ld x, int n, long long factorial, ld temp){
-    ld v = 2 * ((-1) * ((n + 1) & 1)) + 1;
+ld teilor_member(ld x, int n, long long factorial, ld temp, int n0){
+    ld v = n0;
     v *= (n - 1);
     v /= (ld)factorial;
     v *= temp;
@@ -39,15 +39,17 @@ int main() {
 
     for (ld x = a; x < b + step; x += step) {
         int n = 0;
+        int n0 = 1;
         ld cur_member = 1;
         ld sum = 0;
         long long factorial = 1;
         ld temp = 1;
         while ((fabsl(cur_member) > eps * k && n < max_iters) || n == 2) {
-            cur_member = teilor_member(x, n , factorial, temp);
+            cur_member = teilor_member(x, n , factorial, temp, n0);
             factorial *= (n + 1);
             temp *= x;
             sum += cur_member;
+            n0 *= -1;
             n++;
         }
         printf("|%.2Lf|%.19Lf|%.19Lf|%3d|\n", x, sum, inner_func(x), n);
