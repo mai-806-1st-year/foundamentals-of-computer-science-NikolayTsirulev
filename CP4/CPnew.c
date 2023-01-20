@@ -15,10 +15,6 @@ ld dx(pFunc f, ld x) {
     return (f(x + eps / 2) - f(x - eps / 2)) / eps;
 }
 
-ld sign(ld x) {
-    return x > compute_epsilon() ? 1 : x < -compute_epsilon() ? -1 : 0;
-}
-
 ld dht_method(pFunc f, ld a, ld b) {
     ld x = (a + (b - a) / 2);
     while (fabsl(a - b) > fmax(sqrt(compute_epsilon()) * fabs(x), compute_epsilon())) {
@@ -32,8 +28,10 @@ ld dht_method(pFunc f, ld a, ld b) {
 ld iter_method(pFunc f, ld a, ld b) {
     ld x = (a + (b - a) / 2);
     x = f(x);
-    while(fabsl(f(x) - x) > fmax(sqrt(compute_epsilon()) * fabs(x), compute_epsilon())) {
-        x = f(x);
+    if (fabsl(dx(f, x)) < 1) {
+        while(fabsl(f(x) - x) > fmax(sqrt(compute_epsilon()) * fabs(x), compute_epsilon())) {
+            x = f(x);
+        }
     }
     return x;
 }
@@ -41,8 +39,6 @@ ld iter_method(pFunc f, ld a, ld b) {
 ld newton_method(pFunc f, ld a, ld b) {
     ld x = (a + (b - a) / 2);
     while(fabsl(f(x) / dx(f, x)) > fmax(sqrt(compute_epsilon()) * fabs(x), compute_epsilon())){
-        //if (dx(f, x) < fmax(sqrt(compute_epsilon()) * fabs(x), compute_epsilon())) return x;
-        //printf("%ld\n", dx(f, x));
         x = x - f(x) / (dx(f, x));
     }
     return x;
