@@ -45,11 +45,11 @@ int main() {
         long long factorial = 1;
         ld temp = 1;
         while ((fabsl(cur_member) > eps * k && n < max_iters) || n == 2) {
+            n0 *= -1;
             cur_member = teilor_member(x, n , factorial, temp, n0);
             factorial *= (n + 1);
             temp *= x;
             sum += cur_member;
-            n0 *= -1;
             n++;
         }
         printf("|%.2Lf|%.19Lf|%.19Lf|%3d|\n", x, sum, inner_func(x), n);
