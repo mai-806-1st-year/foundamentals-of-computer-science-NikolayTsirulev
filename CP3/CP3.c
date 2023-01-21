@@ -18,7 +18,7 @@ ld inner_func(ld x) {
 }
 
 ld taylor(ld x) {
-    const ld k = 10e2;
+
     ld eps = compute_epsilon();
     int n = 0; 
     int sign = 1;
@@ -26,7 +26,7 @@ ld taylor(ld x) {
     ld result = 0;
     long long factorial = 1;
     ld temp = 1;
-    while ((fabsl(cur_member) > sqrt(eps)*k && n < MAX_ITER) || n == 2) {
+    while ((fabsl(cur_member) > sqrt(eps) && n < MAX_ITER) || n == 2) {
         sign *= -1;
         cur_member = sign * (n - 1) / (ld)factorial * temp;
         factorial *= (n + 1);
@@ -45,11 +45,9 @@ void tabulation(const ld a, const ld b, const uint steps) {
 }
 
 int main() {
-    const ld k = 10e2;
     const ld a = 0;
     const ld b = 1;
     const uint steps = 15;
-    
     printf("__________________________________________________\n");
     printf("|  x  |   Inner function    |     Sum of row      |\n");
     printf("|_____|_____________________|_____________________|\n");
