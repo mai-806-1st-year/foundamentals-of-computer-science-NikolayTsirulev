@@ -10,7 +10,7 @@
 
 <b>Входной контроль знаний с оценкой:</b> <ins> </ins>
 
-<b>Отчет сдан</b> «4» <ins>марта</ins> <ins>2023</ins> г., <b>итоговая оценка</b> <ins> </ins>
+<b>Отчет сдан</b> «11» <ins>марта</ins> <ins>2023</ins> г., <b>итоговая оценка</b> <ins> </ins>
 
 <b>Подпись преподавателя:</b> ________________
 
@@ -39,8 +39,8 @@ __Используем данные утилиты, вводя по нескол
 | Команда |  Базовый синтакис | Флаги | Описание |
 | ------ | ------ | ------ | ------ |
 | head | head [опции] <файл_1> ... <файл_n> | -c (--bytes) — позволяет задавать количество текста не в строках, а в байтах, при записи в виде --bytes=[-]NUM выводит на экран все содержимое файла, кроме NUM байт, расположенных в конце документа; -n (--lines) — показывает заданное количество строк вместо 10, которые выводятся по умолчанию, если записать эту опцию в виде --lines=[-]NUM, будет показан весь текст кроме последних NUM строк; -q (--quiet, --silent) — выводит только текст, не добавляя к нему название файла; -v (--verbose) — перед текстом выводит название файла; -z (--zero-terminated) — символы перехода на новую строку заменяет символами завершения строк | Команда head выводит начальные строки (по умолчанию — 10)  из одного или нескольких документов. Также она может показывать данные, которые передает на вывод другая утилита |
-| dd | dd if=<путь_к_файлy> of=<куда_копировать> [другие_параметры] |bs - указывает сколько байт читать и записывать за один раз; count - скопировать указанное количество блоков, размер одного блока указывается в параметре bs; conv - применить фильтры к потоку данных; ibs - читать указанное количество байт за раз; obs - записывать указанное количество байт за раз; seek - пропустить указанное количество байт в начале устройства для чтения; skip - пропустить указанное количество байт в начале устройства вывода; | Команда служит для копирования, конвертации файлов, а так же для чтения данных |
-| tar | tar [опции] <архив>.tar <файлы_для_архивации> | -A 	(--concatenate) 	присоединить существующий архив к другому; -c 	(--create) создать новый архив; -d 	(--diff --delete) 	проверить различие между архивам, удалить из существующего архива файл; -r 	(--append) 	присоединить файлы к концу архива; -t 	(--list) 	сформировать список содержимого архива; -u 	(--update) 	обновить архив более новыми файлами с тем же именем; -x 	(--extract) 	извлечь файлы из архива | Архиватор |
+| dd | dd if=<путь_к_файлy> of=<куда_копировать> [опции] |bs - указывает сколько байт читать и записывать за один раз; count - скопировать указанное количество блоков, размер одного блока указывается в параметре bs; conv - применить фильтры к потоку данных; ibs - читать указанное количество байт за раз; obs - записывать указанное количество байт за раз; seek - пропустить указанное количество байт в начале устройства для чтения; skip - пропустить указанное количество байт в начале устройства вывода; | Команда служит для копирования, конвертации файлов, а так же для чтения данных |
+| tar | tar [опции] <архив>.tar <файлы_для_архивации> | -A 	(--concatenate) 	присоединить существующий архив к другому; -c 	(--create) создать новый архив; -d 	(--diff --delete) 	проверить различие между архивам и файловой системой, удалить из существующего архива файл; -r 	(--append) 	присоединить файлы к концу архива; -t 	(--list) 	сформировать список содержимого архива; -u 	(--update) 	обновить архив более новыми файлами с тем же именем; -x 	(--extract) 	извлечь файлы из архива; -f file 	(--file) 	вывести результат в файл (или на устройство) file; -p 	(--same-permissions) 	сохранить все права доступа к файлу; -v 	(--verbose) 	выводить подробную информацию процесса; --totals 	выводить итоговую информацию завершенного процесса | Архиватор |
 
 
 ### 7. Сценарий выполнения работы
@@ -256,6 +256,43 @@ hackerman@WARMACHINE_mini:~/lab20$ dd if=file3.txt of=file4.txt conv=lcase
 12 bytes copied, 0.000260977 s, 46.0 kB/s
 hackerman@WARMACHINE_mini:~/lab20$ cat file4.txt
 lorem ipsum
+hackerman@WARMACHINE_mini:~/lab20$ tar --totals
+--create --verbose --file ar1.tar file1.txt file2.txt
+file1.txt
+file2.txt
+Total bytes written: 10240 (10KiB, 16MiB/s)
+hackerman@WARMACHINE_mini:~/lab20$ tar --totals --create --verbose --file ar2.tar file2.txt file3.txt
+file2.txt
+file3.txt
+Total bytes written: 10240 (10KiB, 18MiB/s)
+hackerman@WARMACHINE_mini:~/lab20$ tar -df ar1.tar
+hackerman@WARMACHINE_mini:~/lab20$ tar -tf ar1.tar
+file1.txt
+file2.txt
+hackerman@WARMACHINE_mini:~/lab20$ ls
+ar1.tar  ar2.tar  file1.txt  file2.txt  file3.txt  file4.txt  text.txt
+hackerman@WARMACHINE_mini:~/lab20$ rm file1.txt
+hackerman@WARMACHINE_mini:~/lab20$ rm file2.txt
+hackerman@WARMACHINE_mini:~/lab20$ ls
+ar1.tar  ar2.tar  file3.txt  file4.txt  text.txt
+hackerman@WARMACHINE_mini:~/lab20$ tar -xvf ar1.tar
+file1.txt
+file2.txt
+hackerman@WARMACHINE_mini:~/lab20$ ls
+ar1.tar  ar2.tar  file1.txt  file2.txt  file3.txt  file4.txt  text.txt
+hackerman@WARMACHINE_mini:~/lab20$
+hackerman@WARMACHINE_mini:~/lab20$ tar --totals -cjvf ar4.tar.bz2 file3.txt
+file3.txt
+Total bytes written: 10240 (10KiB, 36MiB/s)
+hackerman@WARMACHINE_mini:~/lab20$ rm file3.txt
+hackerman@WARMACHINE_mini:~/lab20$ ls
+ar1.tar  ar2.tar  ar3.tar  ar4.tar.bz2  file1.txt  file2.txt  file4.txt  text.txt
+hackerman@WARMACHINE_mini:~/lab20$ tar -xzvf ar4.tar.bz2
+
+gzip: stdin: not in gzip format
+tar: Child returned status 1
+tar: Error is not recoverable: exiting now
+
  ```
 
 ### 9. Дневник отладки
