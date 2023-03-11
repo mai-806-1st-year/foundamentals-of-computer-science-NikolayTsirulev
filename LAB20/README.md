@@ -38,9 +38,9 @@ __Используем данные утилиты, вводя по нескол
 
 | Команда |  Базовый синтакис | Флаги | Описание |
 | ------ | ------ | ------ | ------ |
-| head | head [параметры] <файл_1> ... <файл_n> | -c (--bytes) — позволяет задавать количество текста не в строках, а в байтах. При записи в виде --bytes=[-]NUM выводит на экран все содержимое файла, кроме NUM байт, расположенных в конце документа; -n (--lines) — показывает заданное количество строк вместо 10, которые выводятся по умолчанию. Если записать эту опцию в виде --lines=[-]NUM, будет показан весь текст кроме последних NUM строк; -q (--quiet, --silent) — выводит только текст, не добавляя к нему название файла; -v (--verbose) — перед текстом выводит название файла; -z (--zero-terminated) — символы перехода на новую строку заменяет символами завершения строк | Команда head выводит начальные строки (по умолчанию — 10)  из одного или нескольких документов. Также она может показывать данные, которые передает на вывод другая утилита |
-| uniq | uniq [параметры] <файл_источник>_<файл для_записи> | "-u" - выводит исключительно те строки, у которых нет повторов; "-d" - если какая-либо строка повторяется несколько раз, она будет выведена лишь единожды; "-D" - выводит только повторяющиеся строки; "--group" - выводит весь текст, при этом разделяя группы строк пустой строкой; "-c" - в начале каждой строки выводит число, которое обозначает количество повторов; "-i" - при сравнении не будет иметь значение регистр, в котором напечатаны символы; | Команда для поиска повторяющихся строк из текстового файла с возможностью их удаления и вывода |
-| vi/vim | vim [параметры] <файл> | "+номер" - переместить курсор к указанной строке после запуска; "+/шаблон" - выполнить поиск по шаблону и переместить курсор к первому вхождению; "+команда" - выполнить команду после запуска программы; "-b" - двоичный режим, для редактирования исполняемых файлов; "-d" - режим поиска различий в файлах, нужно указать несколько файлов для открытия; "-g" - графический режим; "-n" - не использовать автосохранение для восстановления файла при сбое; "-R" - режим только для чтения; "-w" - сохранить все действия в файл; "-x" - шифровать файл при записи; "-C" - режим совместимости с Vi; | Текстовый редактор |
+| head | head [опции] <файл_1> ... <файл_n> | -c (--bytes) — позволяет задавать количество текста не в строках, а в байтах, при записи в виде --bytes=[-]NUM выводит на экран все содержимое файла, кроме NUM байт, расположенных в конце документа; -n (--lines) — показывает заданное количество строк вместо 10, которые выводятся по умолчанию, если записать эту опцию в виде --lines=[-]NUM, будет показан весь текст кроме последних NUM строк; -q (--quiet, --silent) — выводит только текст, не добавляя к нему название файла; -v (--verbose) — перед текстом выводит название файла; -z (--zero-terminated) — символы перехода на новую строку заменяет символами завершения строк | Команда head выводит начальные строки (по умолчанию — 10)  из одного или нескольких документов. Также она может показывать данные, которые передает на вывод другая утилита |
+| dd | dd if=<путь_к_файлy> of=<куда_копировать> [другие_параметры] |bs - указывает сколько байт читать и записывать за один раз; count - скопировать указанное количество блоков, размер одного блока указывается в параметре bs; conv - применить фильтры к потоку данных; ibs - читать указанное количество байт за раз; obs - записывать указанное количество байт за раз; seek - пропустить указанное количество байт в начале устройства для чтения; skip - пропустить указанное количество байт в начале устройства вывода; | Команда служит для копирования, конвертации файлов, а так же для чтения данных |
+| tar | tar [опции] <архив>.tar <файлы_для_архивации> | -A 	(--concatenate) 	присоединить существующий архив к другому; -c 	(--create) создать новый архив; -d 	(--diff --delete) 	проверить различие между архивам, удалить из существующего архива файл; -r 	(--append) 	присоединить файлы к концу архива; -t 	(--list) 	сформировать список содержимого архива; -u 	(--update) 	обновить архив более новыми файлами с тем же именем; -x 	(--extract) 	извлечь файлы из архива | Архиватор |
 
 
 ### 7. Сценарий выполнения работы
@@ -91,7 +91,171 @@ __Используем данные утилиты, вводя по нескол
 
 ### 8. Распечатка протокола
  ```
+hackerman@WARMACHINE_mini:~/lab20$ cat file1.txt
+1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+2 scelerisque. Aenean cursus nibh et suscipit gravida. Nullam condimentum nec dolor sit amet
+3 tincidunt. In hac habitasse platea dictumst. Curabitur fringilla justo ac hendrerit blandit.
+4 Mauris aliquet quam bibendum magna condimentum placerat quis in elit. Curabitur aliquet lorem
+5 egestas lacus malesuada porta. Class aptent taciti sociosqu ad litora torquent per conubia
+6 nostra, per inceptos himenaeos. In sagittis dui purus, sit amet faucibus nulla rutrum vitae.
+7 Morbi elit nunc, ullamcorper eget velit eu, elementum vehicula sapien. Sed nec enim est.
+hackerman@WARMACHINE_mini:~/lab20$ cat file2.txt
+1 Integer sit amet nunc venenatis, tincidunt ex in, feugiat metus. Fusce elementum ligula
+2 tortor. Praesent quis suscipit ipsum. Aliquam erat volutpat. Duis turpis erat, auctor sed
+3 sodales non, ullamcorper vel est. Ut sagittis libero et massa sollicitudin vestibulum.
+4 Vivamus egestas leo id consectetur maximus. Nullam dignissim libero at lectus maximus, non
+5 blandit orci porta. Morbi non mauris tellus.
+hackerman@WARMACHINE_mini:~/lab20$ head file1.txt
+1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+2 scelerisque. Aenean cursus nibh et suscipit gravida. Nullam condimentum nec dolor sit amet
+3 tincidunt. In hac habitasse platea dictumst. Curabitur fringilla justo ac hendrerit blandit.
+4 Mauris aliquet quam bibendum magna condimentum placerat quis in elit. Curabitur aliquet lorem
+5 egestas lacus malesuada porta. Class aptent taciti sociosqu ad litora torquent per conubia
+6 nostra, per inceptos himenaeos. In sagittis dui purus, sit amet faucibus nulla rutrum vitae.
+7 Morbi elit nunc, ullamcorper eget velit eu, elementum vehicula sapien. Sed nec enim est.
+hackerman@WARMACHINE_mini:~/lab20$ head -c 251 file1.txt
+1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+2 scelerisque. Aenean cursus nibh et suscipit gravida. Nullam condimentum nec dolor sit amet
+3 tincidunt. In hac habitasse platea dictumst. Curabitur fringhackerman@WARMACHINE_mini:~/lab20$
+hackerman@WARMACHINE_mini:~/lab20$
+hackerman@WARMACHINE_mini:~/lab20$ head -n 3 file1.txt
+hackerman@WARMACHINE_mini:~/lab20$ head -n 3 file1.txt
+hackerman@WARMACHINE_mini:~/lab20$ head -n 3 file1.txt file2.txt
+==> file1.txt <==
+1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+2 scelerisque. Aenean cursus nibh et suscipit gravida. Nullam condimentum nec dolor sit amet
+3 tincidunt. In hac habitasse platea dictumst. Curabitur fringilla justo ac hendrerit blandit.
 
+==> file2.txt <==
+1 Integer sit amet nunc venenatis, tincidunt ex in, feugiat metus. Fusce elementum ligula
+2 tortor. Praesent quis suscipit ipsum. Aliquam erat volutpat. Duis turpis erat, auctor sed
+3 sodales non, ullamcorper vel est. Ut sagittis libero et massa sollicitudin vestibulum.
+hackerman@WARMACHINE_mini:~/lab20$ head --lines=-2 file1.txt
+1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+2 scelerisque. Aenean cursus nibh et suscipit gravida. Nullam condimentum nec dolor sit amet
+3 tincidunt. In hac habitasse platea dictumst. Curabitur fringilla justo ac hendrerit blandit.
+4 Mauris aliquet quam bibendum magna condimentum placerat quis in elit. Curabitur aliquet lorem
+5 egestas lacus malesuada porta. Class aptent taciti sociosqu ad litora torquent per conubia
+hackerman@WARMACHINE_mini:~/lab20$ head -q file1.txt file2.txt
+1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+2 scelerisque. Aenean cursus nibh et suscipit gravida. Nullam condimentum nec dolor sit amet
+3 tincidunt. In hac habitasse platea dictumst. Curabitur fringilla justo ac hendrerit blandit.
+4 Mauris aliquet quam bibendum magna condimentum placerat quis in elit. Curabitur aliquet lorem
+5 egestas lacus malesuada porta. Class aptent taciti sociosqu ad litora torquent per conubia
+6 nostra, per inceptos himenaeos. In sagittis dui purus, sit amet faucibus nulla rutrum vitae.
+7 Morbi elit nunc, ullamcorper eget velit eu, elementum vehicula sapien. Sed nec enim est.
+1 Integer sit amet nunc venenatis, tincidunt ex in, feugiat metus. Fusce elementum ligula
+2 tortor. Praesent quis suscipit ipsum. Aliquam erat volutpat. Duis turpis erat, auctor sed
+3 sodales non, ullamcorper vel est. Ut sagittis libero et massa sollicitudin vestibulum.
+4 Vivamus egestas leo id consectetur maximus. Nullam dignissim libero at lectus maximus, non
+5 blandit orci porta. Morbi non mauris tellus.
+hackerman@WARMACHINE_mini:~/lab20$ head -v file1.txt
+==> file1.txt <==
+1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+2 scelerisque. Aenean cursus nibh et suscipit gravida. Nullam condimentum nec dolor sit amet
+3 tincidunt. In hac habitasse platea dictumst. Curabitur fringilla justo ac hendrerit blandit.
+4 Mauris aliquet quam bibendum magna condimentum placerat quis in elit. Curabitur aliquet lorem
+5 egestas lacus malesuada porta. Class aptent taciti sociosqu ad litora torquent per conubia
+6 nostra, per inceptos himenaeos. In sagittis dui purus, sit amet faucibus nulla rutrum vitae.
+7 Morbi elit nunc, ullamcorper eget velit eu, elementum vehicula sapien. Sed nec enim est.
+hackerman@WARMACHINE_mini:~/lab20$ head -z file1.txt
+1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+2 scelerisque. Aenean cursus nibh et suscipit gravida. Nullam condimentum nec dolor sit amet
+3 tincidunt. In hac habitasse platea dictumst. Curabitur fringilla justo ac hendrerit blandit.
+4 Mauris aliquet quam bibendum magna condimentum placerat quis in elit. Curabitur aliquet lorem
+5 egestas lacus malesuada porta. Class aptent taciti sociosqu ad litora torquent per conubia
+6 nostra, per inceptos himenaeos. In sagittis dui purus, sit amet faucibus nulla rutrum vitae.
+7 Morbi elit nunc, ullamcorper eget velit eu, elementum vehicula sapien. Sed nec enim est.
+hackerman@WARMACHINE_mini:~/lab20$ cat > file3.txt
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+^C
+hackerman@WARMACHINE_mini:~/lab20$ cat > file4.txt
+Integer sit amet nunc venenatis, tincidunt ex in, feugiat metus. Fusce elementum ligula
+^C
+hackerman@WARMACHINE_mini:~/lab20$ dd if=file3.txt of=file4.txt
+0+1 records in
+0+1 records out
+94 bytes copied, 0.000134617 s, 698 kB/s
+hackerman@WARMACHINE_mini:~/lab20$ cat > file4.txt
+^C
+hackerman@WARMACHINE_mini:~/lab20$ cat file3.txt
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+hackerman@WARMACHINE_mini:~/lab20$ cat file4.txt
+hackerman@WARMACHINE_mini:~/lab20$ cat > file4.txt
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+^C
+hackerman@WARMACHINE_mini:~/lab20$ cat file4.txt
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+hackerman@WARMACHINE_mini:~/lab20$ cat > file4.txt
+Integer sit amet nunc venenatis, tincidunt ex in, feugiat metus. Fusce elementum ligula
+^C
+hackerman@WARMACHINE_mini:~/lab20$ dd if=file3.txt of=file4.txt bs=1 seek=8
+94+0 records in
+94+0 records out
+94 bytes copied, 0.000201223 s, 467 kB/s
+hackerman@WARMACHINE_mini:~/lab20$ cat file3.txt
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+hackerman@WARMACHINE_mini:~/lab20$ cat file4.txt
+Integer Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+hackerman@WARMACHINE_mini:~/lab20$ cat > file4.txt
+Integer sit amet nunc venenatis, tincidunt ex in, feugiat metus. Fusce elementum ligula
+^C
+hackerman@WARMACHINE_mini:~/lab20$ dd if=file3.txt of=file4.txt skip=2 seek=8
+dd: file3.txt: cannot skip to specified offset
+0+0 records in
+0+0 records out
+0 bytes copied, 0.000196825 s, 0.0 kB/s
+hackerman@WARMACHINE_mini:~/lab20$ cat file3.txt
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+hackerman@WARMACHINE_mini:~/lab20$ cat file4.txt
+Integer sit amet nunc venenatis, tincidunt ex in, feugiat metus. Fusce elementum ligula
+hackerman@WARMACHINE_mini:~/lab20$ dd if=file3.txt of=file4.txt bs=1 skip=1 seek=3
+93+0 records in
+93+0 records out
+93 bytes copied, 0.000171307 s, 543 kB/s
+hackerman@WARMACHINE_mini:~/lab20$ cat file3.txt
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+hackerman@WARMACHINE_mini:~/lab20$ cat file4.txt
+Intorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod magna ut lectus tempus
+hackerman@WARMACHINE_mini:~/lab20$ nano file3.txt
+hackerman@WARMACHINE_mini:~/lab20$ cat file3.txt
+Lorem ipsum
+hackerman@WARMACHINE_mini:~/lab20$ nano file4.txt
+hackerman@WARMACHINE_mini:~/lab20$ cat file4.txt
+Integer sit amet
+hackerman@WARMACHINE_mini:~/lab20$ dd if=file3.txt of=file4.txt bs=1 count=10 seek=3
+10+0 records in
+10+0 records out
+10 bytes copied, 0.000123656 s, 80.9 kB/s
+hackerman@WARMACHINE_mini:~/lab20$ cat file4.txt
+IntLorem ipsuhackerman@WARMACHINE_mcat file3.txt
+Lorem ipsum
+hackerman@WARMACHINE_mini:~/lab20$ nano file4.txt
+hackerman@WARMACHINE_mini:~/lab20$ cat file4.txt
+Integer sit amet
+hackerman@WARMACHINE_mini:~/lab20$ dd if=file3.txt of=file4.txt ibs=1 obs=2 skip=1 seek=3
+11+0 records in
+5+1 records out
+11 bytes copied, 7.3279e-05 s, 150 kB/s
+hackerman@WARMACHINE_mini:~/lab20$ cat file3.txt
+Lorem ipsum
+hackerman@WARMACHINE_mini:~/lab20$ cat file4.txt
+Integeorem ipsum
+hackerman@WARMACHINE_mini:~/lab20$ nano file4.txt
+hackerman@WARMACHINE_mini:~/lab20$ cat file4.txt
+Integer sit amet
+hackerman@WARMACHINE_mini:~/lab20$ dd if=file3.txt of=file4.txt conv=ucase
+0+1 records in
+0+1 records out
+12 bytes copied, 0.000207686 s, 57.8 kB/s
+hackerman@WARMACHINE_mini:~/lab20$ cat file4.txt
+LOREM IPSUM
+hackerman@WARMACHINE_mini:~/lab20$ dd if=file3.txt of=file4.txt conv=lcase
+0+1 records in
+0+1 records out
+12 bytes copied, 0.000260977 s, 46.0 kB/s
+hackerman@WARMACHINE_mini:~/lab20$ cat file4.txt
+lorem ipsum
  ```
 
 ### 9. Дневник отладки
