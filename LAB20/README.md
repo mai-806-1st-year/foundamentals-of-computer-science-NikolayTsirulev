@@ -656,6 +656,61 @@ hackerman@WARMACHINE_mini:~$ find . -type d
 ./.local/share/gedit
 ./.dbus
 ./.dbus/session-bus
+hackerman@WARMACHINE_mini:~$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sdc        251G  2.2G  237G   1% /
+none            3.8G   25M  3.8G   1% /mnt/wslg
+none            3.8G  4.0K  3.8G   1% /mnt/wsl
+tools           221G  195G   26G  89% /init
+none            3.8G     0  3.8G   0% /dev
+none            3.8G  4.0K  3.8G   1% /run
+none            3.8G     0  3.8G   0% /run/lock
+none            3.8G     0  3.8G   0% /run/shm
+none            3.8G     0  3.8G   0% /run/user
+tmpfs           3.8G     0  3.8G   0% /sys/fs/cgroup
+drivers         221G  195G   26G  89% /usr/lib/wsl/drivers
+lib             221G  195G   26G  89% /usr/lib/wsl/lib
+none            3.8G   76K  3.8G   1% /mnt/wslg/versions.txt
+none            3.8G   76K  3.8G   1% /mnt/wslg/doc
+drvfs           221G  195G   26G  89% /mnt/c
+hackerman@WARMACHINE_mini:~$ df -k
+Filesystem     1K-blocks      Used Available Use% Mounted on
+/dev/sdc       263174212   2266892 247469164   1% /
+none             3905368     25356   3880012   1% /mnt/wslg
+none             3905368         4   3905364   1% /mnt/wsl
+tools          230745084 204310192  26434892  89% /init
+none             3903284         0   3903284   0% /dev
+none             3905368         4   3905364   1% /run
+none             3905368         0   3905368   0% /run/lock
+none             3905368         0   3905368   0% /run/shm
+none             3905368         0   3905368   0% /run/user
+tmpfs            3905368         0   3905368   0% /sys/fs/cgroup
+drivers        230745084 204310192  26434892  89% /usr/lib/wsl/drivers
+lib            230745084 204310192  26434892  89% /usr/lib/wsl/lib
+none             3905368        76   3905292   1% /mnt/wslg/versions.txt
+none             3905368        76   3905292   1% /mnt/wslg/doc
+drvfs          230745084 204310192  26434892  89% /mnt/c
+hackerman@WARMACHINE_mini:~/lab20$ ls -lh file2.txt
+-rw-r--r-- 1 hackerman hackerman 12 Mar 11 15:41 file2.txt
+hackerman@WARMACHINE_mini:~/lab20$ split -n 3 file2.txt
+hackerman@WARMACHINE_mini:~/lab20$ ls -lh *
+-rw-r--r-- 1 hackerman hackerman 1.4M Mar 11 16:57 babochka.png
+-rw-r--r-- 1 hackerman hackerman  138 Mar 11 16:57 babochka.png:Zone.Identifier
+-rw-r--r-- 1 hackerman hackerman  141 Mar 11 16:40 differ.diff
+-rw-r--r-- 1 hackerman hackerman   48 Mar 11 16:41 file1.txt.bz2
+-rw-r--r-- 1 hackerman hackerman   12 Mar 11 15:41 file2.txt
+-rw-r--r-- 1 hackerman hackerman    7 Mar 11 16:20 file3.txt
+-rw-r--r-- 1 hackerman hackerman    7 Mar 11 16:37 file4.txt
+-rw-r--r-- 1 hackerman hackerman    0 Mar 11 16:53 file5.txt
+-rw-r--r-- 1 hackerman hackerman 549K Mar 11 16:57 vozdushnyye-shary.png
+-rw-r--r-- 1 hackerman hackerman  156 Mar 11 16:57 vozdushnyye-shary.png:Zone.Identifier
+-rw-r--r-- 1 hackerman hackerman    4 Mar 11 17:06 xaa
+-rw-r--r-- 1 hackerman hackerman    4 Mar 11 17:06 xab
+-rw-r--r-- 1 hackerman hackerman    4 Mar 11 17:06 xac
+hackerman@WARMACHINE_mini:~/lab20$ mktemp -d
+/tmp/tmp.SXCrx1xa4Q
+hackerman@WARMACHINE_mini:~/lab20$ mktemp
+/tmp/tmp.bpVOMoFohx
  ```
 
 ### 9. Дневник отладки
