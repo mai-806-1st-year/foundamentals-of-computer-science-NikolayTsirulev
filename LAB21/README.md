@@ -50,7 +50,7 @@ import argparse
 def write_files_with_suffix(directory, suffix, output_file, max_size):
     with open(output_file, 'w') as f:
         for filename in os.listdir(directory):
-            if filename.endswith(suffix):
+            if filename.endswith(suffix) and os.access(filename, os.X_OK):
                 filepath = os.path.join(directory, filename)
                 size = os.stat(filepath).st_size
                 if size <= max_size:
@@ -74,7 +74,7 @@ suffix=$2
 output_file=$3
 max_size=$4
 
-find "$directory" -type f -name "*.$suffix" -size "-${max_size}c" -printf "%f %s\n" > "$output_file"
+find "$directory" -type f -name "*.$suffix" -size "-${max_size}c" -perm /u=x,g=x,o=x -printf "%f %s\n" > "$output_file"
 ```
 
 
@@ -85,11 +85,13 @@ find "$directory" -type f -name "*.$suffix" -size "-${max_size}c" -printf "%f %s
 ### 8. Распечатка протокола
  ```
 hackerman@WARMACHINE_mini:~/l21$ cd dir
+hackerman@WARMACHINE_mini:~/l21/dir$ chmod +x file2.txt
+hackerman@WARMACHINE_mini:~/l21/dir$ chmod +x file3.txt
 hackerman@WARMACHINE_mini:~/l21/dir$ ls -hl
 total 12K
 -rw-r--r-- 1 hackerman hackerman 147 Apr  1 14:34 file1.txt
--rw-r--r-- 1 hackerman hackerman  23 Apr  1 14:38 file2.txt
--rw-r--r-- 1 hackerman hackerman  26 Apr  1 14:38 file3.txt
+-rw-r--r-x 1 hackerman hackerman  23 Apr  1 14:38 file2.txt
+-rw-r--r-x 1 hackerman hackerman  26 Apr  1 14:38 file3.txt
 hackerman@WARMACHINE_mini:~/l21/dir$ cd ..
 hackerman@WARMACHINE_mini:~/l21$ cat < l21.py
 import os
