@@ -46,8 +46,17 @@ ___Редактор текстов___ nano, ___версия___ 4.8
 
 ### 7. Сценарий выполнения работы
 ```python
-import os
+mport os
 import argparse
+import sys
+
+if len(sys.argv) > 1 and sys.argv[1] == "?":
+    print("Usage: script.py directory suffix output_file max_size")
+    print("directory - directory to search files in")
+    print("suffix - files suffix to search for")
+    print("output_file - file to write results to")
+    print("max_size - maximum file size in bytes")
+    sys.exit(0)
 
 def write_files_with_suffix(directory, suffix, output_file, max_size):
     with open(output_file, 'w') as f:
@@ -70,6 +79,15 @@ if __name__ == '__main__':
 ```
 ```bash
 #!/bin/bash
+
+if [[ "$1" == "?" ]]; then
+    echo "Usage: script.sh directory suffix output_file max_size"
+    echo "directory - directory to search files in"
+    echo "suffix - files suffix to search for"
+    echo "output_file - file to write results to"
+    echo "max_size - maximum file size in bytes"
+    exit 0
+fi
 
 directory=$1
 suffix=$2
@@ -96,13 +114,22 @@ total 12K
 -rw-r--r-x 1 hackerman hackerman  26 Apr  1 14:38 file3.txt
 hackerman@WARMACHINE_mini:~/l21/dir$ cd ..
 hackerman@WARMACHINE_mini:~/l21$ cat < l21.py
-import os
+mport os
 import argparse
+import sys
+
+if len(sys.argv) > 1 and sys.argv[1] == "?":
+    print("Usage: script.py directory suffix output_file max_size")
+    print("directory - directory to search files in")
+    print("suffix - files suffix to search for")
+    print("output_file - file to write results to")
+    print("max_size - maximum file size in bytes")
+    sys.exit(0)
 
 def write_files_with_suffix(directory, suffix, output_file, max_size):
     with open(output_file, 'w') as f:
         for filename in os.listdir(directory):
-            if filename.endswith(suffix):
+            if filename.endswith(suffix) and os.access(filename, os.X_OK):
                 filepath = os.path.join(directory, filename)
                 size = os.stat(filepath).st_size
                 if size <= max_size:
@@ -120,12 +147,21 @@ if __name__ == '__main__':
 hackerman@WARMACHINE_mini:~/l21$ cat < l21.sh
 #!/bin/bash
 
+if [[ "$1" == "?" ]]; then
+    echo "Usage: script.sh directory suffix output_file max_size"
+    echo "directory - directory to search files in"
+    echo "suffix - files suffix to search for"
+    echo "output_file - file to write results to"
+    echo "max_size - maximum file size in bytes"
+    exit 0
+fi
+
 directory=$1
 suffix=$2
 output_file=$3
 max_size=$4
 
-find "$directory" -type f -name "*.$suffix" -size "-${max_size}c" -printf "%f %s\n" > "$output_file"
+find "$directory" -type f -name "*.$suffix" -size "-${max_size}c" -perm /u=x,g=x,o=x -printf "%f %s\n" > "$output_file"
 hackerman@WARMACHINE_mini:~/l21$ python3 l21.py /home/hackerman/l21/dir .txt output.txt 24
 hackerman@WARMACHINE_mini:~/l21$ bash l21.sh /home/hackerman/l21/dir txt output1.txt 27
 hackerman@WARMACHINE_mini:~/l21$ ls
