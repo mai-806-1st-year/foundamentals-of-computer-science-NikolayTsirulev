@@ -20,8 +20,8 @@ __Программирование на интерпретируемых ком�
 ### 2. Цель работы
 __Научиться использовать основные команды обработки текстовых файлов OC UNIX.__
 
-### 3. Задание (Вариант 21)
-__Составить программу выполнения заданных действий над файлами на одном из интерпретируемых командных языков OC UNIX, согласованном с преподавателем (Bash и Python3). Вариант 21: Удаление всех синонимов указанного файла из указанного каталога и его поддиректорий.__
+### 3. Задание (Вариант 23)
+__Составить программу выполнения заданных действий над файлами на одном из интерпретируемых командных языков OC UNIX, согласованном с преподавателем (Bash и Python3). Вариант 23: Запись имен и размеров всех выполняемых файлов с указанным суффиксом в заданный файл, размер которого не должен превышать заданной величины.__
 
 ### 4. Оборудование
 ___Прицессор___: AMD Ryzen 5 5500U with Radeon Graphics 2.10 GHz \
@@ -34,19 +34,49 @@ ___Интерпретатор команд___ bash, ___версия___ 5.0.11(1)
 ___Редактор текстов___ nano, ___версия___ 4.8
 
 ### 6. Идея, метод, алгоритм решения
-__Составим программы на Python3 и Bash для решения данной задачи, и протестируем на каталогах ```lab21```, с поддиректориями ```dir1``` и ```dir2``` и с файлами ```file.txt``` и ```file1.txt```.__
 
+Ввод: Путь к файлам, разрешение файла, называние текстового файла для вывода, максимальный размер файлов.
+Вывод: Файл с именами и размерами искомых файлов.
+На Bash:
+Для выполнения данной задачи используем команду find с параметрами -type f (искать только файлы), -name (искать файлы с указанным суффиксом), -size (искать файлы, размер которых не превышает заданную величину) и -printf (выводить имя файла и его размер). Затем результат перенаправляем в указанный файл.
+На Python 3:
+Для выполнения данной задачи на языке Python 3 используем модуль os и его методы listdir и stat, а также модуль argparse для парсинга аргументов командной строки. 
 
 ### 7. Сценарий выполнения работы
-Программа на Python:
-1. Ищем все файлоы с заданным именем и расширением в каталоге и его поддиректориях с помощью функции ```glob.glob()```;
-2. Удаляем синонимы  с помощью функции  ```os.remove()```.
-Программа на bash:
-1. Переходим в нужную директорию с помощью функции ```cd```;
-2. Задаем имя файла, синонимы которого нужно удалить;
-3. Используем команду ```find``` для поиска всех файлов с именем ```filename``` в текущей директории и ее поддиректориях;
-4. Проверяем, является ли файл синонимом;
-5. Если файл является синонимом, то удаляем его.
+python:```
+import os
+import argparse
+
+def write_files_with_suffix(directory, suffix, output_file, max_size):
+    with open(output_file, 'w') as f:
+        for filename in os.listdir(directory):
+            if filename.endswith(suffix):
+                filepath = os.path.join(directory, filename)
+                size = os.stat(filepath).st_size
+                if size <= max_size:
+                    f.write(f"{filename} {size}\n")
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('directory', help='directory to search for files')
+    parser.add_argument('suffix', help='file suffix to search for')
+    parser.add_argument('output_file', help='file to write results to')
+    parser.add_argument('max_size', type=int, help='maximum file size in bytes')
+    args = parser.parse_args()
+
+    write_files_with_suffix(args.directory, args.suffix, args.output_file, args.max_size)
+```
+bash:```
+#!/bin/bash
+
+directory=$1
+suffix=$2
+output_file=$3
+max_size=$4
+
+find "$directory" -type f -name "*.$suffix" -size "-${max_size}c" -printf "%f %s\n" > "$output_file"
+```
+
 
 Пункты 1-7 отчета составляются строго до начала лабораторной работы.
 Допущен к выполнению работы.  
@@ -54,83 +84,54 @@ __Составим программы на Python3 и Bash для решения
 
 ### 8. Распечатка протокола
  ```
-hackerman@WARMACHINE_mini:~$ mkdir lab21
-hackerman@WARMACHINE_mini:~$ cd lab21
-hackerman@WARMACHINE_mini:~/lab21$ mkdir dir1
-hackerman@WARMACHINE_mini:~/lab21$ mkdir dir2
-hackerman@WARMACHINE_mini:~/lab21$ touch file.txt
-hackerman@WARMACHINE_mini:~/lab21$ touch file1.txt
-hackerman@WARMACHINE_mini:~/lab21$ touch file2.txt
-hackerman@WARMACHINE_mini:~/lab21$ ls
-dir1  dir2  file.txt  file1.txt  file2.txt
-hackerman@WARMACHINE_mini:~/lab21$ cd dir1
-hackerman@WARMACHINE_mini:~/lab21/dir1$ touch file.txt
-hackerman@WARMACHINE_mini:~/lab21/dir1$ touch file1.txt
-hackerman@WARMACHINE_mini:~/lab21/dir1$ cd ..
-hackerman@WARMACHINE_mini:~/lab21$ cd dir2
-hackerman@WARMACHINE_mini:~/lab21/dir2$ touch file.txt
-hackerman@WARMACHINE_mini:~/lab21/dir2$ touch file1.txt
-hackerman@WARMACHINE_mini:~/lab21/dir2$ cd ..
-hackerman@WARMACHINE_mini:~/lab21$ cd ..
-hackerman@WARMACHINE_mini:~$ cat > lab21sh.sh
-#!/bin/bash
-cd /home/hackerman/lab21
-filename="file.txt"
-
-find . -type f -name "$filename" -print0 | while read -d $'\0' file
-do
-    if [ -f "$file" ]; then
-        rm "$file"
-        echo "File synonym removed $file"
-    fi
-done
-
-echo "Synonym deletion completed"^C
-hackerman@WARMACHINE_mini:~$ bash lab21sh.sh
-File synonym removed ./file.txt
-File synonym removed ./dir2/file.txt
-File synonym removed ./dir1/file.txt
-hackerman@WARMACHINE_mini:~$ cd lab21
-hackerman@WARMACHINE_mini:~/lab21$ ls
-dir1  dir2  file1.txt  file2.txt
-hackerman@WARMACHINE_mini:~/lab21$ cd dir1
-hackerman@WARMACHINE_mini:~/lab21/dir1$ ls
-file1.txt
-hackerman@WARMACHINE_mini:~/lab21/dir1$ cd ..
-hackerman@WARMACHINE_mini:~/lab21$ cd dir2
-hackerman@WARMACHINE_mini:~/lab21/dir2$ ls
-file1.txt
-hackerman@WARMACHINE_mini:~/lab21/dir2$ cd ..
-hackerman@WARMACHINE_mini:~/lab21$ cd ..
-hackerman@WARMACHINE_mini:~$ cat > lab21.py
+hackerman@WARMACHINE_mini:~/l21$ cd dir
+hackerman@WARMACHINE_mini:~/l21/dir$ ls -hl
+total 12K
+-rw-r--r-- 1 hackerman hackerman 147 Apr  1 14:34 file1.txt
+-rw-r--r-- 1 hackerman hackerman  23 Apr  1 14:38 file2.txt
+-rw-r--r-- 1 hackerman hackerman  26 Apr  1 14:38 file3.txt
+hackerman@WARMACHINE_mini:~/l21/dir$ cd ..
+hackerman@WARMACHINE_mini:~/l21$ cat < l21.py
 import os
-import glob
+import argparse
 
-def main(filename: str, directory: str):
-
-    file_list = glob.glob(os.path.join(directory, '**', filename), recursive=True)
-
-    for file_path in file_list:
-        if os.path.islink(file_path):
-            os.remove(file_path)
-        else:
-            os.remove(file_path)
+def write_files_with_suffix(directory, suffix, output_file, max_size):
+    with open(output_file, 'w') as f:
+        for filename in os.listdir(directory):
+            if filename.endswith(suffix):
+                filepath = os.path.join(directory, filename)
+                size = os.stat(filepath).st_size
+                if size <= max_size:
+                    f.write(f"{filename} {size}\n")
 
 if __name__ == '__main__':
-    filename = 'file1.txt'
-    directory = '/home/hackerman/lab21'
-    main(filename, directory)
-^C
-hackerman@WARMACHINE_mini:~$ python3 lab21.py
-hackerman@WARMACHINE_mini:~$ cd lab21
-hackerman@WARMACHINE_mini:~/lab21$ ls
-dir1  dir2  file2.txt
-hackerman@WARMACHINE_mini:~/lab21$ cd dir1
-hackerman@WARMACHINE_mini:~/lab21/dir1$ ls
-hackerman@WARMACHINE_mini:~/lab21/dir1$ cd ..
-hackerman@WARMACHINE_mini:~/lab21$ cd dir2
-hackerman@WARMACHINE_mini:~/lab21/dir2$ ls
-hackerman@WARMACHINE_mini:~/lab21/dir2$
+    parser = argparse.ArgumentParser()
+    parser.add_argument('directory', help='directory to search for files')
+    parser.add_argument('suffix', help='file suffix to search for')
+    parser.add_argument('output_file', help='file to write results to')
+    parser.add_argument('max_size', type=int, help='maximum file size in bytes')
+    args = parser.parse_args()
+
+    write_files_with_suffix(args.directory, args.suffix, args.output_file, args.max_size)
+hackerman@WARMACHINE_mini:~/l21$ cat < l21.sh
+#!/bin/bash
+
+directory=$1
+suffix=$2
+output_file=$3
+max_size=$4
+
+find "$directory" -type f -name "*.$suffix" -size "-${max_size}c" -printf "%f %s\n" > "$output_file"
+hackerman@WARMACHINE_mini:~/l21$ python3 l21.py /home/hackerman/l21/dir .txt output.txt 24
+hackerman@WARMACHINE_mini:~/l21$ bash l21.sh /home/hackerman/l21/dir txt output1.txt 27
+hackerman@WARMACHINE_mini:~/l21$ ls
+dir  l21.py  l21.sh  output.txt  output1.txt
+hackerman@WARMACHINE_mini:~/l21$ cat < output.txt
+file2.txt 23
+hackerman@WARMACHINE_mini:~/l21$ cat < output1.txt
+file2.txt 23
+file3.txt 26
+hackerman@WARMACHINE_mini:~/l21$
  ```
 
 ### 9. Дневник отладки
