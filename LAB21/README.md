@@ -43,7 +43,7 @@ ___Редактор текстов___ nano, ___версия___ 4.8
 Для выполнения данной задачи на языке Python 3 используем модуль os и его методы listdir и stat, а также модуль argparse для парсинга аргументов командной строки. 
 
 ### 7. Сценарий выполнения работы
-python:```
+```python
 import os
 import argparse
 
@@ -66,7 +66,7 @@ if __name__ == '__main__':
 
     write_files_with_suffix(args.directory, args.suffix, args.output_file, args.max_size)
 ```
-bash:```
+```bash
 #!/bin/bash
 
 directory=$1
