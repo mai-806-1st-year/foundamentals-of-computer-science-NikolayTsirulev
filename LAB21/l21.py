@@ -4,7 +4,7 @@ import argparse
 def write_files_with_suffix(directory, suffix, output_file, max_size):
     with open(output_file, 'w') as f:
         for filename in os.listdir(directory):
-            if filename.endswith(suffix):
+            if filename.endswith(suffix) and os.access(filename, os.X_OK):
                 filepath = os.path.join(directory, filename)
                 size = os.stat(filepath).st_size
                 if size <= max_size:
