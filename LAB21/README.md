@@ -46,7 +46,7 @@ ___Редактор текстов___ nano, ___версия___ 4.8
 
 ### 7. Сценарий выполнения работы
 ```python
-mport os
+import os
 import argparse
 import sys
 
@@ -114,7 +114,7 @@ total 12K
 -rw-r--r-x 1 hackerman hackerman  26 Apr  1 14:38 file3.txt
 hackerman@WARMACHINE_mini:~/l21/dir$ cd ..
 hackerman@WARMACHINE_mini:~/l21$ cat < l21.py
-mport os
+import os
 import argparse
 import sys
 
