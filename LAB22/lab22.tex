@@ -11,6 +11,13 @@
 \usepackage{hyperref}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.16}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=cyan,
+    filecolor=magenta,      
+    urlcolor=blue,
+    pdfpagemode=FullScreen,
+    }
 \title{Отчёт по лабораторной работе №22 по курсу “Алгоритмы и структуры данных”}
 \author{Цирулев Николай}
 \begin{document}
@@ -69,6 +76,16 @@ $sin(\varphi)=\sqrt{1-cos(\varphi)^2}$\\
     \caption{3D график функции $f(x,y) = \sin(x)\cos(y)$}
 \end{figure}
 \begin{figure}[H]
+    \begin{tikzpicture}
+        \draw[->] (-3,0) -- (3,0) node[right] {$x$};
+        \draw[->] (0,-1) -- (0,5) node[above] {$y$};
+        \draw[scale=1,domain=-2:2,smooth,variable=\x,blue] plot ({\x},{\x*\x}) node[right] {$f(x)=x^2$};
+    \end{tikzpicture}
+    \caption{2D график функции $f(x)=x^2$}
+\end{figure}
+
+
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{frog.jpg}
 \caption{\label{fig:frog}Лягушка}
@@ -85,9 +102,9 @@ $sin(\varphi)=\sqrt{1-cos(\varphi)^2}$\\
     \hline
 \end{tabular}
 \section{Замечания автора по существу работы}
-\begin{itemize}
-\item \href{https://codeforces.com/contest/1798/submission/199301228}{Контест (Div. 2)}
-\item \href{}{Дорешка}
-\end{itemize}
+\href{https://codeforces.com/contest/1798/submission/199301228}{Контест (Div. 2)}\\
+\href{https://codeforces.com/contest/1798/submission/201243811}{Дорешка 1}\\
+\href{https://codeforces.com/contest/1798/submission/201242217}{Дорешка 2}
 \section{Выводы}
+Были изучены и применены для оформления отчета лабораторной работы методы оформления документов в издательской системе \LaTeX.
 \end{document}
