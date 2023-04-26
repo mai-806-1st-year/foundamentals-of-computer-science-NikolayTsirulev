@@ -12,6 +12,7 @@ typedef struct {
     int first;
     int last;
     int capacity;
+    int size;
     T data[];
 } Deque;
 
