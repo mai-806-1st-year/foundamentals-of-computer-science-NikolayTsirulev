@@ -83,3 +83,7 @@ bool is_full(Deque *d)
 {
     return d->size == d->capacity;
 }
+
+void deque_destroy(Deque* const d) {
+    free(d);
+}
