@@ -1,45 +1,22 @@
-#ifndef DEQUE_H
-#define DEQUE_H
-
 #include <stdbool.h>
-#include <stddef.h>
-
-#include "types.h"
+#include <stdlib.h>
+#include <string.h>
 
 typedef int T;
 
-typedef struct {
-    int first;
-    int last;
+typedef struct
+{
+    int head;
+    int tail;
     int capacity;
     int size;
     T data[];
 } Deque;
 
-Deque* deque_create(const int);
-
-bool deque_is_empty(const Deque*);
-
-bool deque_is_full(const Deque*);
-
-size_t deque_capacity(const Deque*);
-
-size_t deque_length(const Deque*);
-
-Deque* deque_resize(Deque*, int);
-
-int deque_push_front(Deque**, const T);
-
-int deque_push_back(Deque**, const T);
-
-int deque_pop_front(Deque*);
-
-int deque_pop_back(Deque*);
-
-int deque_front(const Deque*, T*);
-
-int deque_back(const Deque*, T*);
-
-void deque_destroy(Deque*);
-
-#endif //_DEQUE_H_
+Deque *create_deq(int size);               //создать дек
+Deque *push_back(Deque *d, T elem);        //вставить в конец
+T pop_back(Deque *d);                      //удалить из конца
+Deque *push_front(Deque *d, T elem);       //вставить в начало
+T pop_front(Deque *d);                     //удалить из начала
+bool is_empty(Deque *d);                   //true, если дек пустой
+bool is_full(Deque *d);                    //true, если дек полный
