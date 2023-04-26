@@ -26,5 +26,6 @@ Deque *push_front(Deque *d, T elem);       //вставить в начало
 T pop_front(Deque *d);                     //удалить из начала
 bool is_empty(Deque *d);                   //true, если дек пустой
 bool is_full(Deque *d);                    //true, если дек полный
+void deque_destroy(Deque*);                //удалить дек
 
 #endif //_DEQUE_H_
