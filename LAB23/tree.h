@@ -1,0 +1,48 @@
+#ifndef TREE_H
+#define TREE_H
+
+#include <stddef.h>
+
+typedef struct TreeNode TreeNode;
+
+typedef struct {
+    TreeNode *root;
+    size_t size;
+} Tree;
+
+struct TreeNode {
+    TreeNode *parent, *left, *right;
+    int value;
+};
+
+void treeClear(Tree *tree);
+
+bool treeContains(const Tree *tree, int value);
+
+void treeCreate(Tree *tree);
+
+int treeErase(Tree * const tree, int value);
+
+int treeInsert(Tree * const tree, int value);
+
+int treeGet(const Tree *tree, size_t index, int *value);
+
+int treeSet(Tree *tree, size_t index, int value);
+
+size_t treeSize(const Tree *tree);
+
+void treeDestroy(Tree *tree);
+
+void preorder(struct TreeNode* root);
+
+void inorder(struct TreeNode* root);
+
+void postorder(struct TreeNode* root);
+
+void printTree(struct TreeNode* root, int depth);
+
+int findDepth(struct TreeNode* root, int x);
+
+int minDepth(const Tree * const tree);
+
+#endif // TREE_H
