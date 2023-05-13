@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctype.h>
 #include "tree.h"
 
 int main(void) {
@@ -16,21 +17,66 @@ int main(void) {
     treeInsert(&tr, 5);
     treeInsert(&tr, 7);
     struct TreeNode * node = tr.root;
-    printf("\npostorder: ");
-    postorder(node);
-    printf("\npreorder: ");
-    preorder(node);
-    printf("\ninorder: ");
-    inorder(node);
-    printf("\nprint:\n");
-    printTree(node, 0);
-    printf("\nDepth of minimal node: %d\n", minDepth(&tr));
-    printf("\nprint when add 8:\n");
-    printTree(node, 0);
-    treeInsert(&tr, 8);
-    printf("\nprint without 2:\n");
-    treeErase(&tr, 4);
-    printTree(node, 0);
-    treeClear(&tr);
+        int choice;
+
+    do {
+    printf(
+        "1 - добавить узел\n"
+        "2 - удалить узел\n"
+        "3 - КЛП обход\n"
+        "4 - ЛКП обход\n"
+        "5 - ЛПК обход\n"
+        "6 - текстовая визуализация дерева\n"
+        "7 - вывести глубину минимальной вершины дерева\n"
+        "8 - уничтожить дерево\n"
+        "0 - выход\n"
+    );
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                int n;
+                printf("Введите значение добавляемого узла: \n");
+                scanf("%d", &n);
+                treeInsert(&tr, n);
+                break;
+            case 2:
+                printf("Введите значение удаляемого узла: \n");
+                scanf("%d", &n);
+                treeErase(&tr, n);
+                break;
+            case 3:
+                printf("\n");
+                preorder(node);
+                printf("\n");
+                break;
+            case 4:
+                printf("\n");
+                inorder(node);
+                printf("\n");
+                break;
+            case 5:
+                printf("\n");
+                postorder(node);
+                printf("\n");
+                break;
+            case 6:
+                printf("\n");
+                printTree(node, 0);
+                printf("\n");
+                break;
+            case 7:
+                printf("\n%d\n", minDepth(&tr));
+                break;
+            case 8:
+                treeClear(&tr);
+                break;
+            case 0:
+                printf("До свидания!\n");
+                break;
+            default:
+                printf("Некорректный выбор. Попробуйте еще раз.\n");
+                break;
+        }
+    } while (choice != 0);
     
 }
