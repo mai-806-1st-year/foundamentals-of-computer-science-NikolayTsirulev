@@ -12,22 +12,18 @@ typedef struct {
 
 struct TreeNode {
     TreeNode *parent, *left, *right;
-    int value;
+    float value;
 };
 
 void treeClear(Tree *tree);
 
-bool treeContains(const Tree *tree, int value);
+bool treeContains(const Tree *tree, float value);
 
 void treeCreate(Tree *tree);
 
-int treeErase(Tree * const tree, int value);
+int treeErase(Tree * const tree, float value);
 
-int treeInsert(Tree * const tree, int value);
-
-int treeGet(const Tree *tree, size_t index, int *value);
-
-int treeSet(Tree *tree, size_t index, int value);
+int treeInsert(Tree * const tree, float value);
 
 size_t treeSize(const Tree *tree);
 
@@ -40,8 +36,6 @@ void inorder(struct TreeNode* root);
 void postorder(struct TreeNode* root);
 
 void printTree(struct TreeNode* root, int depth);
-
-int findDepth(struct TreeNode* root, int x);
 
 int minDepth(const Tree * const tree);
 
