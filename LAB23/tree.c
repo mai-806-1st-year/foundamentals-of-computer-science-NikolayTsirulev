@@ -117,7 +117,6 @@ void treeDestroy(Tree * const tree) {
     treeClear(tree);
 }
 
-// Функция для Pre-order обхода дерева без рекурсии
 void preorder(struct TreeNode* root) {
     if (root == NULL) return;
 
@@ -138,7 +137,6 @@ void preorder(struct TreeNode* root) {
     }
 }
 
-// Функция для In-order обхода дерева без рекурсии
 void inorder(struct TreeNode* root) {
     if (root == NULL) return;
 
@@ -158,7 +156,6 @@ void inorder(struct TreeNode* root) {
     }
 }
 
-// Функция для Post-order обхода дерева без рекурсии
 void postorder(struct TreeNode* root) {
     if (root == NULL) return;
 
