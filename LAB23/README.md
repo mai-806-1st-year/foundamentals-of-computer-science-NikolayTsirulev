@@ -944,13 +944,15 @@ hackerman@WARMACHINE_mini:~/l2325$
 | 13.05.23 | 12:23 | Выполнение лабораторной работы | |
 
 ### 10. Замечания автора по существу работы
-контест
+Div 3
 https://codeforces.com/contest/1807/submission/198136631
-дорешка
 https://codeforces.com/contest/1807/submission/201980199
 https://codeforces.com/contest/1807/submission/201986109
 https://codeforces.com/contest/1807/submission/201991595
-
+Div 2:
+https://codeforces.com/contest/1821/submission/202867587
+https://codeforces.com/contest/1821/submission/203733926
+https://codeforces.com/contest/1821/submission/203734871
 ### 11. Выводы
 Благодаря лабораторной работе были получены навыки работы с bash-скриптами. Также были изучены методы языка Python работы с файлами, суффиксами и командной строкой. Было освоено определение суффикса файла и его размера с помощью интерпретируемых командных языков OC UNIX (Python 3 и Bash).
 
