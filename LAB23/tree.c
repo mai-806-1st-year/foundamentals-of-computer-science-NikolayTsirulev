@@ -26,7 +26,7 @@ void treeClear(Tree * const tree) {
     }
 }
 
-bool treeContains(const Tree * const tree, const int value) {
+bool treeContains(const Tree * const tree, const float value) {
     TreeNode *node = tree->root;
     while (node != NULL) {
         if (node->value > value)
@@ -44,7 +44,7 @@ void treeCreate(Tree * const tree) {
     tree->size = 0;
 }
 
-int treeErase(Tree * const tree, const int value) {
+int treeErase(Tree * const tree, const float value) {
     TreeNode **ptr = &tree->root, *node = NULL;
     while (*ptr != NULL) {
         node = *ptr;
@@ -60,7 +60,7 @@ int treeErase(Tree * const tree, const int value) {
 
     assert(node->value == value);
     if (node->left != NULL && node->right != NULL) {
-        int * const value = &node->value;
+        float * const value = &node->value;
         ptr = &node->right;
         node = node->right;
         while (node->left != NULL) {
@@ -83,7 +83,7 @@ int treeErase(Tree * const tree, const int value) {
     --tree->size;
 }
 
-int treeInsert(Tree * const tree, const int value) {
+int treeInsert(Tree * const tree, const float value) {
     TreeNode **ptr = &tree->root, *node = NULL;
     while (*ptr != NULL) {
         node = *ptr;
@@ -121,12 +121,12 @@ void preorder(struct TreeNode* root) {
     if (root == NULL) return;
 
     struct TreeNode* stack[MAX_SIZE];
-    int top = -1;
-    stack[++top] = root;
+    int top = 0;
+    stack[top] = root;
 
     while (top >= 0) {
         struct TreeNode* node = stack[top--];
-        printf("%d ", node->value);
+        printf("%f ", node->value);
 
         if (node->right != NULL) {
             stack[++top] = node->right;
@@ -151,7 +151,7 @@ void inorder(struct TreeNode* root) {
         }
 
         node = stack[top--];
-        printf("%d ", node->value);
+        printf("%f ", node->value);
         node = node->right;
     }
 }
@@ -161,9 +161,9 @@ void postorder(struct TreeNode* root) {
 
     struct TreeNode* stack1[MAX_SIZE];
     struct TreeNode* stack2[MAX_SIZE];
-    int top1 = -1;
+    int top1 = 0;
     int top2 = -1;
-    stack1[++top1] = root;
+    stack1[top1] = root;
 
     while (top1 >= 0) {
         struct TreeNode* node = stack1[top1--];
@@ -179,7 +179,7 @@ void postorder(struct TreeNode* root) {
 
     while (top2 >= 0) {
         struct TreeNode* node = stack2[top2--];
-        printf("%d ", node->value);
+        printf("%f ", node->value);
     }
 }
 
@@ -189,18 +189,8 @@ void printTree(struct TreeNode* root, int depth) {
     printTree(root->right, depth + 1);
     for (int i = 0; i < depth; i++)
         printf("    ");
-    printf("%d\n", root->value);
+    printf("%f\n", root->value);
     printTree(root->left, depth + 1);
-}
-
-int findDepth(struct TreeNode* root, int x) {
-    if (root == NULL)
-        return -1;
-    int dist = -1;
-    if ((dist = findDepth(root->left, x)) >= 0)
-        return dist + 1;
-  
-    return dist;
 }
 
 int minDepth(const Tree * const tree) {
