@@ -15,15 +15,13 @@
 <b>Подпись преподавателя:</b> ________________
 
 ### 1. Тема
-__Программирование на интерпретируемых командных языках.__
+__Динамические структуры данных. Обработка деревьев__
 
 ### 2. Цель работы
-__Научиться использовать основные команды обработки текстовых файлов OC UNIX.__
+__Составить программуна языке Си для построения и обработки упорядоченного двоичного дерева, содержащего узлы типа float.__
 
-### 3. Задание (Вариант 23)
-__Составить программу выполнения заданных действий над файлами на одном из интерпретируемых командных языков OC UNIX, согласованном с преподавателем (Bash и Python 3).__ 
-
-__Вариант 23: Запись имен и размеров всех выполняемых файлов с указанным суффиксом в заданный файл, размер которого не должен превышать заданной величины.__
+### 3. Задание (Вариант 21)
+__Определить глубину минимальной вершины двоичного дерева.__ 
 
 ### 4. Оборудование
 ___Прицессор___: AMD Ryzen 5 5500U with Radeon Graphics 2.10 GHz \
@@ -36,46 +34,35 @@ ___Интерпретатор команд___ bash, ___версия___ 5.0.11(1)
 ___Редактор текстов___ nano, ___версия___ 4.8
 
 ### 6. Идея, метод, алгоритм решения
-
-##### Ввод: Путь к файлам, разрешение файла, называние текстового файла для вывода, максимальный размер файлов.
-##### Вывод: Файл с именами и размерами искомых файлов.
-##### На Bash:
-Для выполнения данной задачи используем команду find с параметрами -type f (искать только файлы), -name (искать файлы с указанным суффиксом), -size (искать файлы, размер которых не превышает заданную величину) и -printf (выводить имя файла и его размер). Затем результат перенаправляем в указанный файл.
-##### На Python 3:
-Для выполнения данной задачи на языке Python 3 используем модуль os и его методы listdir и stat, а также модуль argparse для парсинга аргументов командной строки. 
+1. Создадим двоичное дерево;
+2. Напишем для него функции вывода значений узлов в порядке ЛКП, КЛП, ЛПК обходов (для обхода будем использовать нерекурсивный алгоритм, использующий импровизированный стек на массиве);
+3. Напишем функцию удаления дерева, где порядок удаления элементов будет соответствовать ЛПК обходу;
+4. Напишем функцию вывода глубины минимальной вершины двоичного дерева.
 
 ### 7. Сценарий выполнения работы
-```python
-import os
-import argparse
-import sys
+```
+CC=gcc
+RM=rm -fr
+CFLAGS=-Wall -Werror -Wextra -Wfatal-errors -Wpedantic -pedantic-errors -std=c18
+LDFLAGS=
+LDLIBS=
+SOURCES=main.c tree.c
+OBJECTS=$(SOURCES:.c=.o)
+EXECUTABLE=main
 
-if len(sys.argv) > 1 and sys.argv[1] == "?":
-    print("Usage: script.py directory suffix output_file max_size")
-    print("directory - directory to search files in")
-    print("suffix - files suffix to search for")
-    print("output_file - file to write results to")
-    print("max_size - maximum file size in bytes")
-    sys.exit(0)
+debug: CFLAGS+=-Og -g
+debug: all
 
-def write_files_with_suffix(directory, suffix, output_file, max_size):
-    with open(output_file, 'w') as f:
-        for filename in os.listdir(directory):
-            if filename.endswith(suffix) and os.access(filename, os.X_OK):
-                filepath = os.path.join(directory, filename)
-                size = os.stat(filepath).st_size
-                if size <= max_size:
-                    f.write(f"{filename} {size}\n")
+all: null
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('directory', help='directory to search for files')
-    parser.add_argument('suffix', help='file suffix to search for')
-    parser.add_argument('output_file', help='file to write results to')
-    parser.add_argument('max_size', type=int, help='maximum file size in bytes')
-    args = parser.parse_args()
+nullOBJECTS)
+        null null null null -o $@
 
-    write_files_with_suffix(args.directory, args.suffix, args.output_file, args.max_size)
+null: %.c
+        null null -c $< -o $@
+
+clean:
+        null *.o null
 ```
 ```bash
 #!/bin/bash
@@ -104,74 +91,531 @@ find "$directory" -type f -name "*.$suffix" -size "-${max_size}c" -perm /u=x,g=x
 
 ### 8. Распечатка протокола
  ```
-hackerman@WARMACHINE_mini:~/l21$ cd dir
-hackerman@WARMACHINE_mini:~/l21/dir$ chmod +x file2.txt
-hackerman@WARMACHINE_mini:~/l21/dir$ chmod +x file3.txt
-hackerman@WARMACHINE_mini:~/l21/dir$ ls -hl
-total 12K
--rw-r--r-- 1 hackerman hackerman 147 Apr  1 14:34 file1.txt
--rw-r--r-x 1 hackerman hackerman  23 Apr  1 14:38 file2.txt
--rw-r--r-x 1 hackerman hackerman  26 Apr  1 14:38 file3.txt
-hackerman@WARMACHINE_mini:~/l21/dir$ cd ..
-hackerman@WARMACHINE_mini:~/l21$ cat < l21.py
-import os
-import argparse
-import sys
+hackerman@WARMACHINE_mini:~/l2325$ ls
+Makefile  main.c  tree.c  tree.h
+hackerman@WARMACHINE_mini:~/l2325$ cat Makefile
+CC=gcc
+RM=rm -fr
+CFLAGS=-Wall -Werror -Wextra -Wfatal-errors -Wpedantic -pedantic-errors -std=c18
+LDFLAGS=
+LDLIBS=
+SOURCES=main.c tree.c
+OBJECTS=$(SOURCES:.c=.o)
+EXECUTABLE=main
 
-if len(sys.argv) > 1 and sys.argv[1] == "?":
-    print("Usage: script.py directory suffix output_file max_size")
-    print("directory - directory to search files in")
-    print("suffix - files suffix to search for")
-    print("output_file - file to write results to")
-    print("max_size - maximum file size in bytes")
-    sys.exit(0)
+debug: CFLAGS+=-Og -g
+debug: all
 
-def write_files_with_suffix(directory, suffix, output_file, max_size):
-    with open(output_file, 'w') as f:
-        for filename in os.listdir(directory):
-            if filename.endswith(suffix) and os.access(filename, os.X_OK):
-                filepath = os.path.join(directory, filename)
-                size = os.stat(filepath).st_size
-                if size <= max_size:
-                    f.write(f"{filename} {size}\n")
+all: $(EXECUTABLE)
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('directory', help='directory to search for files')
-    parser.add_argument('suffix', help='file suffix to search for')
-    parser.add_argument('output_file', help='file to write results to')
-    parser.add_argument('max_size', type=int, help='maximum file size in bytes')
-    args = parser.parse_args()
+$(EXECUTABLE): $(OBJECTS)
+        $(CC) $(LDFLAGS) $(OBJECTS) $(LDLIBS) -o $@
 
-    write_files_with_suffix(args.directory, args.suffix, args.output_file, args.max_size)
-hackerman@WARMACHINE_mini:~/l21$ cat < l21.sh
-#!/bin/bash
+%.o: %.c
+        $(CC) $(CFLAGS) -c $< -o $@
 
-if [[ "$1" == "?" ]]; then
-    echo "Usage: script.sh directory suffix output_file max_size"
-    echo "directory - directory to search files in"
-    echo "suffix - files suffix to search for"
-    echo "output_file - file to write results to"
-    echo "max_size - maximum file size in bytes"
-    exit 0
-fi
+clean:
+        $(RM) *.o $(EXECUTABLE)
+hackerman@WARMACHINE_mini:~/l2325$ cat main.c
+#include <assert.h>
+#include <errno.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <ctype.h>
+#include "tree.h"
 
-directory=$1
-suffix=$2
-output_file=$3
-max_size=$4
+int main(void) {
+    float n;
+    Tree tr;
+    treeCreate(&tr);
+    treeInsert(&tr, 4);
+    treeInsert(&tr, 2);
+    treeInsert(&tr, 1);
+    treeInsert(&tr, 3);
+    treeInsert(&tr, 6.7);
+    treeInsert(&tr, 5);
+    treeInsert(&tr, 7.1);
+    struct TreeNode * node = tr.root;
+    int choice;
 
-find "$directory" -type f -name "*.$suffix" -size "-${max_size}c" -perm /u=x,g=x,o=x -printf "%f %s\n" > "$output_file"
-hackerman@WARMACHINE_mini:~/l21$ python3 l21.py /home/hackerman/l21/dir .txt output.txt 24
-hackerman@WARMACHINE_mini:~/l21$ bash l21.sh /home/hackerman/l21/dir txt output1.txt 27
-hackerman@WARMACHINE_mini:~/l21$ ls
-dir  l21.py  l21.sh  output.txt  output1.txt
-hackerman@WARMACHINE_mini:~/l21$ cat < output.txt
-file2.txt 23
-hackerman@WARMACHINE_mini:~/l21$ cat < output1.txt
-file2.txt 23
-file3.txt 26
-hackerman@WARMACHINE_mini:~/l21$
+    do {
+        printf(
+            "1 - добавить узел\n"
+            "2 - удалить узел\n"
+            "3 - КЛП обход\n"
+            "4 - ЛКП обход\n"
+            "5 - ЛПК обход\n"
+            "6 - текстовая визуализация дерева\n"
+            "7 - вывести глубину минимальной вершины дерева\n"
+            "8 - уничтожить дерево\n"
+            "0 - выход\n"
+        );
+        if (scanf("%d", &choice)) {
+                switch (choice) {
+                    case 1:
+                        printf("Введите значение добавляемого узла: \n");
+                        if (scanf("%f", &n) == 1) {
+                                treeInsert(&tr, n);
+                        }
+                        break;
+                    case 2:
+                        printf("Введите значение удаляемого узла: \n");
+                        if (scanf("%f", &n) == 1) {
+                                treeErase(&tr, n);
+                        }
+                        break;
+                    case 3:
+                        printf("\n");
+                        preorder(node);
+                        printf("\n");
+                        break;
+                    case 4:
+                        printf("\n");
+                        inorder(node);
+                        printf("\n");
+                        break;
+                    case 5:
+                        printf("\n");
+                        postorder(node);
+                        printf("\n");
+                        break;
+                    case 6:
+                        printf("\n");
+                        printTree(node, 0);
+                        printf("\n");
+                        break;
+                    case 7:
+                        printf("\n%d\n", minDepth(&tr));
+                        break;
+                    case 8:
+                        treeClear(&tr);
+                        break;
+                    case 0:
+                        printf("До свидания!\n");
+                        break;
+                    default:
+                        printf("Некорректный выбор. Попробуйте еще раз.\n");
+                        break;
+                }
+        }
+    } while (choice != 0);
+
+}
+hackerman@WARMACHINE_mini:~/l2325$ cat tree.c
+#include <assert.h>
+#include <errno.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#define MAX_SIZE 100
+#include "tree.h"
+#include <stdio.h>
+
+void treeClear(Tree * const tree) {
+    TreeNode * root = tree->root;
+    if (root == NULL) return;
+
+    struct TreeNode* stack[MAX_SIZE];
+    int top = -1;
+    struct TreeNode* node = root;
+
+    while (node != NULL || top >= 0) {
+        while (node != NULL) {
+            stack[++top] = node;
+            node = node->left;
+        }
+
+        node = stack[top--];
+        free(node);
+        node = node->right;
+    }
+}
+
+bool treeContains(const Tree * const tree, const float value) {
+    TreeNode *node = tree->root;
+    while (node != NULL) {
+        if (node->value > value)
+            node = node->left;
+        else if (node->value < value)
+            node = node->right;
+        else
+            return true;
+    }
+    return false;
+}
+
+void treeCreate(Tree * const tree) {
+    tree->root = NULL;
+    tree->size = 0;
+}
+
+int treeErase(Tree * const tree, const float value) {
+    TreeNode **ptr = &tree->root, *node = NULL;
+    while (*ptr != NULL) {
+        node = *ptr;
+        if (node->value > value)
+            ptr = &node->left;
+        else if (node->value < value)
+            ptr = &node->right;
+        else
+            break;
+    }
+    if (node == NULL)
+        return EINVAL;
+
+    assert(node->value == value);
+    if (node->left != NULL && node->right != NULL) {
+        float * const value = &node->value;
+        ptr = &node->right;
+        node = node->right;
+        while (node->left != NULL) {
+            ptr = &node->left;
+            node = node->left;
+        }
+        *value = node->value;
+    }
+    if (node->left != NULL) {
+        assert(node->right == NULL);
+        *ptr = node->left;
+        node->left->parent = node->parent;
+    } else if (node->right != NULL) {
+        assert(node->left == NULL);
+        *ptr = node->right;
+        node->right->parent = node->parent;
+    } else
+        *ptr = NULL;
+    free(node);
+    --tree->size;
+}
+
+int treeInsert(Tree * const tree, const float value) {
+    TreeNode **ptr = &tree->root, *node = NULL;
+    while (*ptr != NULL) {
+        node = *ptr;
+        if (node->value > value)
+            ptr = &node->left;
+        else if (node->value < value)
+            ptr = &node->right;
+        else
+            return EINVAL;
+    }
+    *ptr = malloc(sizeof(TreeNode));
+    if (*ptr == NULL)
+        return errno;
+    ++tree->size;
+    (*ptr)->parent = node;
+    (*ptr)->left = NULL;
+    (*ptr)->right = NULL;
+    (*ptr)->value = value;
+    return 0;
+}
+
+bool treeIsEmpty(const Tree * const tree) {
+    return tree->size == 0;
+}
+
+size_t treeSize(const Tree * const tree) {
+    return tree->size;
+}
+
+void treeDestroy(Tree * const tree) {
+    treeClear(tree);
+}
+
+void preorder(struct TreeNode* root) {
+    if (root == NULL) return;
+
+    struct TreeNode* stack[MAX_SIZE];
+    int top = 0;
+    stack[top] = root;
+
+    while (top >= 0) {
+        struct TreeNode* node = stack[top--];
+        printf("%f ", node->value);
+
+        if (node->right != NULL) {
+            stack[++top] = node->right;
+        }
+        if (node->left != NULL) {
+            stack[++top] = node->left;
+        }
+    }
+}
+
+void inorder(struct TreeNode* root) {
+    if (root == NULL) return;
+
+    struct TreeNode* stack[MAX_SIZE];
+    int top = -1;
+    struct TreeNode* node = root;
+
+    while (node != NULL || top >= 0) {
+        while (node != NULL) {
+            stack[++top] = node;
+            node = node->left;
+        }
+
+        node = stack[top--];
+        printf("%f ", node->value);
+        node = node->right;
+    }
+}
+
+void postorder(struct TreeNode* root) {
+    if (root == NULL) return;
+
+    struct TreeNode* stack1[MAX_SIZE];
+    struct TreeNode* stack2[MAX_SIZE];
+    int top1 = 0;
+    int top2 = -1;
+    stack1[top1] = root;
+
+    while (top1 >= 0) {
+        struct TreeNode* node = stack1[top1--];
+        stack2[++top2] = node;
+
+        if (node->left != NULL) {
+            stack1[++top1] = node->left;
+        }
+        if (node->right != NULL) {
+            stack1[++top1] = node->right;
+        }
+    }
+
+    while (top2 >= 0) {
+        struct TreeNode* node = stack2[top2--];
+        printf("%f ", node->value);
+    }
+}
+
+void printTree(struct TreeNode* root, int depth) {
+    if (root == NULL)
+        return;
+    printTree(root->right, depth + 1);
+    for (int i = 0; i < depth; i++)
+        printf("    ");
+    printf("%f\n", root->value);
+    printTree(root->left, depth + 1);
+}
+
+int minDepth(const Tree * const tree) {
+    struct TreeNode * node = tree->root;
+    int depth = 0;
+    while(node->left) {
+        node = node->left;
+        depth++;
+    }
+    return depth;
+}
+hackerman@WARMACHINE_mini:~/l2325$ cat tree.h
+#ifndef TREE_H
+#define TREE_H
+
+#include <stddef.h>
+
+typedef struct TreeNode TreeNode;
+
+typedef struct {
+    TreeNode *root;
+    size_t size;
+} Tree;
+
+struct TreeNode {
+    TreeNode *parent, *left, *right;
+    float value;
+};
+
+void treeClear(Tree *tree);
+
+bool treeContains(const Tree *tree, float value);
+
+void treeCreate(Tree *tree);
+
+int treeErase(Tree * const tree, float value);
+
+int treeInsert(Tree * const tree, float value);
+
+size_t treeSize(const Tree *tree);
+
+void treeDestroy(Tree *tree);
+
+void preorder(struct TreeNode* root);
+
+void inorder(struct TreeNode* root);
+
+void postorder(struct TreeNode* root);
+
+void printTree(struct TreeNode* root, int depth);
+
+int minDepth(const Tree * const tree);
+
+#endif // TREE_H
+hackerman@WARMACHINE_mini:~/l2325$ make
+gcc -Wall -Werror -Wextra -Wfatal-errors -Wpedantic -pedantic-errors -std=c18 -Og -g -c main.c -o main.o
+gcc -Wall -Werror -Wextra -Wfatal-errors -Wpedantic -pedantic-errors -std=c18 -Og -g -c tree.c -o tree.o
+tree.c: In function ‘treeErase’:
+tree.c:84:1: error: control reaches end of non-void function [-Werror=return-type]
+   84 | }
+      | ^
+compilation terminated due to -Wfatal-errors.
+cc1: all warnings being treated as errors
+make: *** [Makefile:19: tree.o] Error 1
+hackerman@WARMACHINE_mini:~/l2325$ make
+gcc -Wall -Werror -Wextra -Wfatal-errors -Wpedantic -pedantic-errors -std=c18 -Og -g -c tree.c -o tree.o
+gcc  main.o tree.o  -o main
+hackerman@WARMACHINE_mini:~/l2325$ ./main
+1 - добавить узел
+2 - удалить узел
+3 - КЛП обход
+4 - ЛКП обход
+5 - ЛПК обход
+6 - текстовая визуализация дерева
+7 - вывести глубину минимальной вершины дерева
+8 - уничтожить дерево
+0 - выход
+6
+
+        7.100000
+    6.700000
+        5.000000
+4.000000
+        3.000000
+    2.000000
+        1.000000
+
+1 - добавить узел
+2 - удалить узел
+3 - КЛП обход
+4 - ЛКП обход
+5 - ЛПК обход
+6 - текстовая визуализация дерева
+7 - вывести глубину минимальной вершины дерева
+8 - уничтожить дерево
+0 - выход
+1
+Введите значение добавляемого узла:
+2.1
+1 - добавить узел
+2 - удалить узел
+3 - КЛП обход
+4 - ЛКП обход
+5 - ЛПК обход
+6 - текстовая визуализация дерева
+7 - вывести глубину минимальной вершины дерева
+8 - уничтожить дерево
+0 - выход
+6
+
+        7.100000
+    6.700000
+        5.000000
+4.000000
+        3.000000
+            2.100000
+    2.000000
+        1.000000
+
+1 - добавить узел
+2 - удалить узел
+3 - КЛП обход
+4 - ЛКП обход
+5 - ЛПК обход
+6 - текстовая визуализация дерева
+7 - вывести глубину минимальной вершины дерева
+8 - уничтожить дерево
+0 - выход
+2
+Введите значение удаляемого узла:
+2.1
+1 - добавить узел
+2 - удалить узел
+3 - КЛП обход
+4 - ЛКП обход
+5 - ЛПК обход
+6 - текстовая визуализация дерева
+7 - вывести глубину минимальной вершины дерева
+8 - уничтожить дерево
+0 - выход
+6
+
+        7.100000
+    6.700000
+        5.000000
+4.000000
+        3.000000
+    2.000000
+        1.000000
+
+1 - добавить узел
+2 - удалить узел
+3 - КЛП обход
+4 - ЛКП обход
+5 - ЛПК обход
+6 - текстовая визуализация дерева
+7 - вывести глубину минимальной вершины дерева
+8 - уничтожить дерево
+0 - выход
+3
+
+4.000000 2.000000 1.000000 3.000000 6.700000 5.000000 7.100000
+1 - добавить узел
+2 - удалить узел
+3 - КЛП обход
+4 - ЛКП обход
+5 - ЛПК обход
+6 - текстовая визуализация дерева
+7 - вывести глубину минимальной вершины дерева
+8 - уничтожить дерево
+0 - выход
+4
+
+1.000000 2.000000 3.000000 4.000000 5.000000 6.700000 7.100000
+1 - добавить узел
+2 - удалить узел
+3 - КЛП обход
+4 - ЛКП обход
+5 - ЛПК обход
+6 - текстовая визуализация дерева
+7 - вывести глубину минимальной вершины дерева
+8 - уничтожить дерево
+0 - выход
+5
+
+1.000000 3.000000 2.000000 5.000000 7.100000 6.700000 4.000000
+1 - добавить узел
+2 - удалить узел
+3 - КЛП обход
+4 - ЛКП обход
+5 - ЛПК обход
+6 - текстовая визуализация дерева
+7 - вывести глубину минимальной вершины дерева
+8 - уничтожить дерево
+0 - выход
+7
+
+2
+1 - добавить узел
+2 - удалить узел
+3 - КЛП обход
+4 - ЛКП обход
+5 - ЛПК обход
+6 - текстовая визуализация дерева
+7 - вывести глубину минимальной вершины дерева
+8 - уничтожить дерево
+0 - выход
+8
+1 - добавить узел
+2 - удалить узел
+3 - КЛП обход
+4 - ЛКП обход
+5 - ЛПК обход
+6 - текстовая визуализация дерева
+7 - вывести глубину минимальной вершины дерева
+8 - уничтожить дерево
+0 - выход
+0
+До свидания!
+hackerman@WARMACHINE_mini:~/l2325$
  ```
 
 ### 9. Дневник отладки
