@@ -40,48 +40,345 @@ ___Редактор текстов___ nano, ___версия___ 4.8
 4. Напишем функцию вывода глубины минимальной вершины двоичного дерева.
 
 ### 7. Сценарий выполнения работы
+##Makefile
+https://github.com/mai-806-1st-year/fundamentals-of-computer-science-NikolayTsirulev/blob/f2066667520561309491d8013404107279357481/LAB23/Makefile#L1C1-L22
+
+```C
+#include <assert.h>
+#include <errno.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <ctype.h>
+#include "tree.h"
+
+int main(void) {
+    float n;
+    Tree tr;
+    treeCreate(&tr);
+    treeInsert(&tr, 4);
+    treeInsert(&tr, 2);
+    treeInsert(&tr, 1);
+    treeInsert(&tr, 3);
+    treeInsert(&tr, 6.7);
+    treeInsert(&tr, 5);
+    treeInsert(&tr, 7.1);
+    struct TreeNode * node = tr.root;
+    int choice;
+
+    do {
+        printf(
+            "1 - добавить узел\n"
+            "2 - удалить узел\n"
+            "3 - КЛП обход\n"
+            "4 - ЛКП обход\n"
+            "5 - ЛПК обход\n"
+            "6 - текстовая визуализация дерева\n"
+            "7 - вывести глубину минимальной вершины дерева\n"
+            "8 - уничтожить дерево\n"
+            "0 - выход\n"
+        );
+        if (scanf("%d", &choice)) {
+		switch (choice) {
+		    case 1:
+		        printf("Введите значение добавляемого узла: \n");
+		        if (scanf("%f", &n) == 1) {
+		        	treeInsert(&tr, n);
+		        }
+		        break;
+		    case 2:
+		        printf("Введите значение удаляемого узла: \n");
+		        if (scanf("%f", &n) == 1) {
+		        	treeErase(&tr, n);
+		        }
+		        break;
+		    case 3:
+		        printf("\n");
+		        preorder(node);
+		        printf("\n");
+		        break;
+		    case 4:
+		        printf("\n");
+		        inorder(node);
+		        printf("\n");
+		        break;
+		    case 5:
+		        printf("\n");
+		        postorder(node);
+		        printf("\n");
+		        break;
+		    case 6:
+		        printf("\n");
+		        printTree(node, 0);
+		        printf("\n");
+		        break;
+		    case 7:
+		        printf("\n%d\n", minDepth(&tr));
+		        break;
+		    case 8:
+		        treeClear(&tr);
+		        break;
+		    case 0:
+		        printf("До свидания!\n");
+		        break;
+		    default:
+		        printf("Некорректный выбор. Попробуйте еще раз.\n");
+		        break;
+		}
+        }
+    } while (choice != 0);
+    
+}
 ```
-[CC=gcc
-RM=rm -fr
-CFLAGS=-Wall -Werror -Wextra -Wfatal-errors -Wpedantic -pedantic-errors -std=c18
-LDFLAGS=
-LDLIBS=
-SOURCES=main.c tree.c
-OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLE=main
+```C
+#include <assert.h>
+#include <errno.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#define MAX_SIZE 100
+#include "tree.h"
+#include <stdio.h>
 
-debug: CFLAGS+=-Og -g
-debug: all
+void treeClear(Tree * const tree) {
+    TreeNode * root = tree->root;
+    if (root == NULL) return;
 
-all: null
+    struct TreeNode* stack[MAX_SIZE];
+    int top = -1;
+    struct TreeNode* node = root;
 
-nullOBJECTS)
-        null null null null -o $@
+    while (node != NULL || top >= 0) {
+        while (node != NULL) {
+            stack[++top] = node;
+            node = node->left;
+        }
 
-null: %.c
-        null null -c $< -o $@
+        node = stack[top--];
+        free(node);
+        node = node->right;
+    }
+}
 
-clean:
-        null *.o null](https://github.com/mai-806-1st-year/fundamentals-of-computer-science-NikolayTsirulev/blob/7855e46b9b565178128259593642a601538d8c6b/LAB23/Makefile#L1-L22)
+bool treeContains(const Tree * const tree, const float value) {
+    TreeNode *node = tree->root;
+    while (node != NULL) {
+        if (node->value > value)
+            node = node->left;
+        else if (node->value < value)
+            node = node->right;
+        else
+            return true;
+    }
+    return false;
+}
+
+void treeCreate(Tree * const tree) {
+    tree->root = NULL;
+    tree->size = 0;
+}
+
+int treeErase(Tree * const tree, const float value) {
+    TreeNode **ptr = &tree->root, *node = NULL;
+    while (*ptr != NULL) {
+        node = *ptr;
+        if (node->value > value)
+            ptr = &node->left;
+        else if (node->value < value)
+            ptr = &node->right;
+        else
+            break;
+    }
+    if (node == NULL)
+        return EINVAL;
+
+    assert(node->value == value);
+    if (node->left != NULL && node->right != NULL) {
+        float * const value = &node->value;
+        ptr = &node->right;
+        node = node->right;
+        while (node->left != NULL) {
+            ptr = &node->left;
+            node = node->left;
+        }
+        *value = node->value;
+    }
+    if (node->left != NULL) {
+        assert(node->right == NULL);
+        *ptr = node->left;
+        node->left->parent = node->parent;
+    } else if (node->right != NULL) {
+        assert(node->left == NULL);
+        *ptr = node->right;
+        node->right->parent = node->parent;
+    } else
+        *ptr = NULL;
+    free(node);
+    --tree->size;
+}
+
+int treeInsert(Tree * const tree, const float value) {
+    TreeNode **ptr = &tree->root, *node = NULL;
+    while (*ptr != NULL) {
+        node = *ptr;
+        if (node->value > value)
+            ptr = &node->left;
+        else if (node->value < value)
+            ptr = &node->right;
+        else
+            return EINVAL;
+    }
+    *ptr = malloc(sizeof(TreeNode));
+    if (*ptr == NULL)
+        return errno;
+    ++tree->size;
+    (*ptr)->parent = node;
+    (*ptr)->left = NULL;
+    (*ptr)->right = NULL;
+    (*ptr)->value = value;
+    return 0;
+}
+
+bool treeIsEmpty(const Tree * const tree) {
+    return tree->size == 0;
+}
+
+size_t treeSize(const Tree * const tree) {
+    return tree->size;
+}
+
+void treeDestroy(Tree * const tree) {
+    treeClear(tree);
+}
+
+void preorder(struct TreeNode* root) {
+    if (root == NULL) return;
+
+    struct TreeNode* stack[MAX_SIZE];
+    int top = 0;
+    stack[top] = root;
+
+    while (top >= 0) {
+        struct TreeNode* node = stack[top--];
+        printf("%f ", node->value);
+
+        if (node->right != NULL) {
+            stack[++top] = node->right;
+        }
+        if (node->left != NULL) {
+            stack[++top] = node->left;
+        }
+    }
+}
+
+void inorder(struct TreeNode* root) {
+    if (root == NULL) return;
+
+    struct TreeNode* stack[MAX_SIZE];
+    int top = -1;
+    struct TreeNode* node = root;
+
+    while (node != NULL || top >= 0) {
+        while (node != NULL) {
+            stack[++top] = node;
+            node = node->left;
+        }
+
+        node = stack[top--];
+        printf("%f ", node->value);
+        node = node->right;
+    }
+}
+
+void postorder(struct TreeNode* root) {
+    if (root == NULL) return;
+
+    struct TreeNode* stack1[MAX_SIZE];
+    struct TreeNode* stack2[MAX_SIZE];
+    int top1 = 0;
+    int top2 = -1;
+    stack1[top1] = root;
+
+    while (top1 >= 0) {
+        struct TreeNode* node = stack1[top1--];
+        stack2[++top2] = node;
+
+        if (node->left != NULL) {
+            stack1[++top1] = node->left;
+        }
+        if (node->right != NULL) {
+            stack1[++top1] = node->right;
+        }
+    }
+
+    while (top2 >= 0) {
+        struct TreeNode* node = stack2[top2--];
+        printf("%f ", node->value);
+    }
+}
+
+void printTree(struct TreeNode* root, int depth) {
+    if (root == NULL)
+        return;
+    printTree(root->right, depth + 1);
+    for (int i = 0; i < depth; i++)
+        printf("    ");
+    printf("%f\n", root->value);
+    printTree(root->left, depth + 1);
+}
+
+int minDepth(const Tree * const tree) {
+    struct TreeNode * node = tree->root;
+    int depth = 0;
+    while(node->left) {
+        node = node->left;
+        depth++;
+    }
+    return depth;
+}
 ```
-```bash
-#!/bin/bash
+```C
+#ifndef TREE_H
+#define TREE_H
 
-if [[ "$1" == "?" ]]; then
-    echo "Usage: script.sh directory suffix output_file max_size"
-    echo "directory - directory to search files in"
-    echo "suffix - files suffix to search for"
-    echo "output_file - file to write results to"
-    echo "max_size - maximum file size in bytes"
-    exit 0
-fi
+#include null
 
-directory=$1
-suffix=$2
-output_file=$3
-max_size=$4
+typedef struct TreeNode TreeNode;
 
-find "$directory" -type f -name "*.$suffix" -size "-${max_size}c" -perm /u=x,g=x,o=x -printf "%f %s\n" > "$output_file"
+typedef struct {
+    TreeNode *root;
+    size_t size;
+} Tree;
+
+struct TreeNode {
+    TreeNode *parent, *left, *right;
+    float value;
+};
+
+void treeClear(Tree *tree);
+
+bool treeContains(const Tree *tree, float value);
+
+void treeCreate(Tree *tree);
+
+int treeErase(Tree * const tree, float value);
+
+int treeInsert(Tree * const tree, float value);
+
+size_t treeSize(const Tree *tree);
+
+void treeDestroy(Tree *tree);
+
+void preorder(struct TreeNode* root);
+
+void inorder(struct TreeNode* root);
+
+void postorder(struct TreeNode* root);
+
+void printTree(struct TreeNode* root, int depth);
+
+int minDepth(const Tree * const tree);
+
+#endif null
 ```
 
 
