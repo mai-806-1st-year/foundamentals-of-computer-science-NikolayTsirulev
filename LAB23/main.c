@@ -7,16 +7,16 @@
 #include "tree.h"
 
 int main(void) {
-    int n;
+    float n;
     Tree tr;
     treeCreate(&tr);
     treeInsert(&tr, 4);
     treeInsert(&tr, 2);
     treeInsert(&tr, 1);
     treeInsert(&tr, 3);
-    treeInsert(&tr, 6);
+    treeInsert(&tr, 6.7);
     treeInsert(&tr, 5);
-    treeInsert(&tr, 7);
+    treeInsert(&tr, 7.1);
     struct TreeNode * node = tr.root;
     int choice;
 
@@ -36,13 +36,13 @@ int main(void) {
 		switch (choice) {
 		    case 1:
 		        printf("Введите значение добавляемого узла: \n");
-		        if (scanf("%d", &n) == 1) {
+		        if (scanf("%f", &n) == 1) {
 		        	treeInsert(&tr, n);
 		        }
 		        break;
 		    case 2:
 		        printf("Введите значение удаляемого узла: \n");
-		        if (scanf("%d", &n) == 1) {
+		        if (scanf("%f", &n) == 1) {
 		        	treeErase(&tr, n);
 		        }
 		        break;
