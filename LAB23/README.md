@@ -41,7 +41,7 @@ ___Редактор текстов___ nano, ___версия___ 4.8
 
 ### 7. Сценарий выполнения работы
 ```
-CC=gcc
+[CC=gcc
 RM=rm -fr
 CFLAGS=-Wall -Werror -Wextra -Wfatal-errors -Wpedantic -pedantic-errors -std=c18
 LDFLAGS=
@@ -62,7 +62,7 @@ null: %.c
         null null -c $< -o $@
 
 clean:
-        null *.o null
+        null *.o null](https://github.com/mai-806-1st-year/fundamentals-of-computer-science-NikolayTsirulev/blob/7855e46b9b565178128259593642a601538d8c6b/LAB23/Makefile#L1-L22)
 ```
 ```bash
 #!/bin/bash
