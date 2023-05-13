@@ -41,7 +41,7 @@ ___Редактор текстов___ nano, ___версия___ 4.8
 
 ### 7. Сценарий выполнения работы
 ##Makefile
-https://github.com/mai-806-1st-year/fundamentals-of-computer-science-NikolayTsirulev/blob/f2066667520561309491d8013404107279357481/LAB23/Makefile#L1C1-L22
+[https://github.com/mai-806-1st-year/fundamentals-of-computer-science-NikolayTsirulev/blob/f2066667520561309491d8013404107279357481/LAB23/Makefile#L1C1-L22](https://github.com/mai-806-1st-year/fundamentals-of-computer-science-NikolayTsirulev/blob/998e091066763a9bf1a207f2690f150f456e24f9/LAB23/Makefile#L1C1-L22)
 
 ```C
 #include <assert.h>
