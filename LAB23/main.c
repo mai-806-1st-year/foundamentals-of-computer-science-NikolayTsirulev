@@ -9,7 +9,6 @@ int main(void) {
     Tree tr;
     treeCreate(&tr);
     treeInsert(&tr, 4);
-    //printf("%d  jn", tr.root->value);
     treeInsert(&tr, 2);
     treeInsert(&tr, 1);
     treeInsert(&tr, 3);
@@ -25,7 +24,6 @@ int main(void) {
     inorder(node);
     printf("\nprint:\n");
     printTree(node, 0);
-    //int minDepth = findMinDepth(node, 0, node->value);
     printf("\nDepth of minimal node: %d\n", minDepth(&tr));
     printf("\nprint when add 8:\n");
     printTree(node, 0);
