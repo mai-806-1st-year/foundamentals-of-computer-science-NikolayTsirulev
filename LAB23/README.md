@@ -945,14 +945,14 @@ hackerman@WARMACHINE_mini:~/l2325$
 
 ### 10. Замечания автора по существу работы
  Div 3
-https://codeforces.com/contest/1807/submission/198136631
-https://codeforces.com/contest/1807/submission/201980199
-https://codeforces.com/contest/1807/submission/201986109
-https://codeforces.com/contest/1807/submission/201991595
+[контест 1](https://codeforces.com/contest/1807/submission/198136631)
+[дорешка 1.1](https://codeforces.com/contest/1807/submission/201980199)
+[дорешка 1.2](https://codeforces.com/contest/1807/submission/201986109)
+[дорешка 1.3](https://codeforces.com/contest/1807/submission/201991595)
  Div 2:
-https://codeforces.com/contest/1821/submission/202867587
-https://codeforces.com/contest/1821/submission/203733926
-https://codeforces.com/contest/1821/submission/203734871
+[контест 2](https://codeforces.com/contest/1821/submission/202867587)
+[дорешка 2.1](https://codeforces.com/contest/1821/submission/203733926)
+[дорешка 2.2](https://codeforces.com/contest/1821/submission/203734871)
 ### 11. Выводы
 Благодаря лабораторной работе были получены навыки работы с утилитой Makefile. Также были изучены методы построения и обработки упорядоченных двоичных деревьев.
 
