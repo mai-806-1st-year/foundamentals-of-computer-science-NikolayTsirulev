@@ -103,7 +103,7 @@ hackerman@WARMACHINE_mini:~/mai_labs/lab26$
 | 02.06.23 | 22:53 | Выполнение лабораторной работы | |
 
 ### 10. Замечания автора по существу работы
-Защита:  
+Защита (Div 2):  
 [задача A](https://codeforces.com/contest/1837/submission/207196750)  
 [задача B](https://codeforces.com/contest/1837/submission/207200823)  
 [задача C](https://codeforces.com/contest/1837/submission/207256622)  
