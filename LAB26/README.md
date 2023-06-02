@@ -105,9 +105,7 @@ hackerman@WARMACHINE_mini:~/mai_labs/lab26$
 ### 10. Замечания автора по существу работы
 Защита:
 [задача A](https://codeforces.com/contest/1837/submission/207196750)
-
 [задача B](https://codeforces.com/contest/1837/submission/207200823)
-
 [задача C](https://codeforces.com/contest/1837/submission/207256622)
 
 
