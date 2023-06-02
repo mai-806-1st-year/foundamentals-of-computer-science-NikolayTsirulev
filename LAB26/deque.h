@@ -13,7 +13,6 @@ typedef struct
     int head;
     int tail;
     int capacity;
-    int size;
     T data[];
 } deq;
 
@@ -24,6 +23,7 @@ typedef struct
 } iterator;
 
 deq *create_deq(int size);
+int deque_size(deq *d);
 deq *push_back(deq *d, T elem);
 T pop_back(deq *d);
 T top_back(deq *d);
@@ -35,7 +35,7 @@ bool is_full(deq *d);
 iterator get_iterator(deq *d, bool head);
 T next(iterator *it);
 T prev(iterator *it);
-bool delete(deq *d);
+void delete(deq *d);
 deq *merge(deq *d1, deq *d2);
 deq *sort(deq *d);
 
