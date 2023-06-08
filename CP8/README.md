@@ -98,10 +98,10 @@ hackerman@WARMACHINE_mini:~/mai_labs/cp8$
 | 02.06.23 | 22:53 | Выполнение лабораторной работы | |
 
 ### 10. Замечания автора по существу работы
-Защита (Div 2):  
-[задача A](https://codeforces.com/contest/1837/submission/207196750)  
-[задача B](https://codeforces.com/contest/1837/submission/207200823)  
-[задача C](https://codeforces.com/contest/1837/submission/207256622)  
+Защита (contest 1840, Div 3):  
+[задача A](https://codeforces.com/contest/1840/submission/208763060)  
+[задача B](https://codeforces.com/contest/1840/submission/208780062)  
+[задача C](https://codeforces.com/contest/1840/submission/208990732)  
 
 
 ### 11. Выводы
