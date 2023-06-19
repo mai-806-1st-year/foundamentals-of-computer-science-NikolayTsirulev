@@ -71,6 +71,7 @@ Baker EL M 48 - 73 81 77 +
 ```
 Вывод:
 ```
+Usage: program filename
 Thomas math: 63 physics: 71 computer science: 84
 White math: 89 physics: 85 computer science: 82
 Harris math: 57 physics: 61 computer science: 68
@@ -91,6 +92,7 @@ hackerman@WARMACHINE_mini:~/mai_labs/cp6$ ./a.out data.txt data.dat
 20 lines are written
 hackerman@WARMACHINE_mini:~/mai_labs/cp6$ gcc cp62.c
 hackerman@WARMACHINE_mini:~/mai_labs/cp6$ ./a.out data.dat
+Usage: program filename
 Thomas math: 63 physics: 71 computer science: 84
 White math: 89 physics: 85 computer science: 82
 Harris math: 57 physics: 61 computer science: 68
