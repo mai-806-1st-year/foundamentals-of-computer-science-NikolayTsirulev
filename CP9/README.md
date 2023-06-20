@@ -50,19 +50,15 @@ ___Редактор текстов___ nano, ___версия___ 4.8
 отдельной строке.
 ### 7. Сценарий выполнения работы
 ```
-size of list = 11
-3 2 1 4 5 6 7 8 96 9 10
-remove elem with data = 2
-3 1 4 5 6 7 8 96 9 10
-remove elem with data = 9
-3 1 4 5 6 7 8 96 10
-remove tail =  10
-3 1 4 5 6 7 8 96
-Insert 99,98,97
-3 97 1 4 5 6 7 8 96
-3 97 1 98 4 5 6 7 8 96
-3 97 1 98 4 99 5 6 7 8 96
-3 1 4 5 6 7 8
+hackerman@WARMACHINE_mini:~/mai_labs/cp9/code$ ls
+Makefile  complex.c  complex.h  complex.o  data.txt  main  main.c  main.o  table.c  table.h  table.o
+hackerman@WARMACHINE_mini:~/mai_labs/cp9/code$ make clean all
+rm -fr *.o main
+gcc -Wall -Werror -Wextra -Wfatal-errors -Wpedantic -pedantic-errors -std=c18 -c main.c -o main.o
+gcc -Wall -Werror -Wextra -Wfatal-errors -Wpedantic -pedantic-errors -std=c18 -c complex.c -o complex.o
+gcc -Wall -Werror -Wextra -Wfatal-errors -Wpedantic -pedantic-errors -std=c18 -c table.c -o table.o
+gcc  main.o complex.o table.o  -o main
+hackerman@WARMACHINE_mini:~/mai_labs/cp9/code$ ./main
 ```
 
 
@@ -160,8 +156,8 @@ hackerman@WARMACHINE_mini:~/mai_labs/cp9$
 | 20.06.23 | 16:11 | Выполнение курсовой работы | |
 
 ### 10. Замечания автора по существу работы
-Защита (contest 1840, Div 3):  
-[задача A](https://codeforces.com/contest/1840/submission/208763060)  
+Защита (contest 1841, Div 2):  
+[задача A](https://codeforces.com/contest/1841/submission/209398915)  
 
 
 ### 11. Выводы
