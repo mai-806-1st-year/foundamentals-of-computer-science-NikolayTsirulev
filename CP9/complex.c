@@ -1,15 +1,13 @@
 #include "complex.h"
 
 bool complex_read(key_complex* x) {
-    char c;
-    if (scanf("%lf%c%lf%c%c", &(x->real), &c, &(x->img), &c, &c) == 5)
+    if (scanf("%lf+%lf*i", &(x->real), &(x->img)) == 5)
         return true;
     return false;
 }
 
 bool complex_file_read(key_complex* x, FILE* in) {
-    char c;
-    if (fscanf(in, "%lf%c%lf%c%c", &(x->real), &c, &(x->img), &c, &c) == 5) {
+    if (fscanf(in, "%lf+%lf*i", &(x->real), &(x->img)) == 5) {
         return true;
     }
     return false;
@@ -32,5 +30,6 @@ bool key_compare(key_complex a, key_complex b) {
 }
 
 void complex_print(key_complex x) {
-    printf("%.2lf + %.2lf*i", x.real, x.img);
+    if (x.real != 0 || x.img !=0)
+        printf("%.2lf+%.2lf*i", x.real, x.img);
 }
