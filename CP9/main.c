@@ -6,7 +6,7 @@
 int main() {
     FILE *in = fopen("data.txt","r");
     if (!in) exit(EXIT_FAILURE);
-    data_str* table = (data_str*)malloc(MAX_STRING_SIZE*sizeof(data_str));
+    data_str* table = (data_str*)malloc(MAX_STRING_SIZE* sizeof(data_str));
     int size = table_read(table, in);
     int choose;
     bool flag = true;
