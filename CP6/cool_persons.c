@@ -8,7 +8,7 @@ void PrintCoolPersons(FILE* file) {
     person p;
     while (fread (&p, sizeof(person), 1, file) == 1) {
         if(!p.gender&&p.math!=p.physics&&p.math!=p.computer_science&&p.physics!=p.computer_science){
-            printf("%s math: %u physics: %u computer science: %u\n", p.surname, p.math, p.physics, p.computer_science);
+            printf("%s %s %d %d %d %u %u %u %d\n", p.surname, p.initials, p.gender, p.school_number, p.medal, p.math, p.physics, p.computer_science, p.essay);
         }
     }
 }
