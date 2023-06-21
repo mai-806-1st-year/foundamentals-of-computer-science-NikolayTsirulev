@@ -1,9 +1,13 @@
 #include "person.h"
-#include <stdbool.h>
 
 bool ReadData (person* p, FILE* in) {
-    return fscanf(in, "%[^ ] %[^ ] %c %d %c %u %u %u %c\n", p->surname, p->initials, &p->gender, &p->school_number, &p->medal, &p->math, &p->physics, &p->computer_science, &p->essay) == 9;
-    }
+    int essay, gender, medal;
+    int res = fscanf(in, "%[^ ] %[^ ] %d %d %d %u %u %u %d\n", p->surname, p->initials, &gender, &p->school_number, &medal, &p->math, &p->physics, &p->computer_science, &essay);
+    p->essay = (bool)essay;
+    p->gender = (bool)gender;
+    p->medal = (bool)medal;
+    return res == 9;
+}
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
@@ -21,18 +25,9 @@ int main(int argc, char* argv[]) {
         return 3;
     }
     person p;
-    int c = 0;
-    fseek(out, sizeof(int), SEEK_SET);
     while(ReadData(&p, in)) {
     	fwrite(&p, sizeof(person), 1, out);
-        c++;
     }
-    fseek(out, 0, SEEK_SET);
-    if (fwrite(&c, sizeof(int), 1, out) != 1) {
-        fprintf(stderr, "Write error!\n");
-        return 1;
-    }
-    printf("%d lines are written\n", c);
     fclose(in);
     fclose(out);
     return 0;
