@@ -72,9 +72,9 @@ Baker EL 1 48 0 73 81 77 1
 Вывод:
 ```
 Usage: program filename
-Johnson math: 100 physics: 99 computer science: 98
-Harris math: 57 physics: 61 computer science: 68
-King math: 51 physics: 60 computer science: 67
+Johnson RE 0 35 1 100 99 98 0
+Harris KR 0 4 0 57 61 68 1
+King MJ 0 3 0 51 60 67 0
 ```
 
 
@@ -89,9 +89,9 @@ hackerman@WARMACHINE_mini:~/mai_labs/cp6$ ./a.out data.txt data.dat
 hackerman@WARMACHINE_mini:~/mai_labs/cp6$ gcc cool_persons.c
 hackerman@WARMACHINE_mini:~/mai_labs/cp6$ ./a.out data.dat
 Usage: program filename
-Johnson math: 100 physics: 99 computer science: 98
-Harris math: 57 physics: 61 computer science: 68
-King math: 51 physics: 60 computer science: 67
+Johnson RE 0 35 1 100 99 98 0
+Harris KR 0 4 0 57 61 68 1
+King MJ 0 3 0 51 60 67 0
 hackerman@WARMACHINE_mini:~/mai_labs/cp6$
  ```
 
