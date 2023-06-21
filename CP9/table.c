@@ -10,9 +10,14 @@ int table_read(data_str table[], FILE* in) {
     return i;
 }
 void table_print(data_str table[], size_t size) {
-    for (size_t i = 0; i < size; ++i){
+    for (size_t i = 0; i < size; ++i) {
         complex_print(table[i].key);
-        printf(" %s", table[i].str);
+        char *newline = strchr(table[i].str, '\n');
+        if (newline != NULL) {
+            printf("%s", table[i].str);
+        } else {
+            printf("%s\n", table[i].str);
+        }
     }
 }
 
@@ -45,7 +50,7 @@ void binary_search(data_str table[], size_t size, key_complex k) {
     while(left < right){
         mid = left + (right - left) / 2;
 
-        if(complex_less(k, table[mid].key)) right = mid;
+        if(key_compare(table[mid].key, k)) right = mid;
         else left = mid + 1;
     }
 
@@ -59,7 +64,7 @@ void binary_search(data_str table[], size_t size, key_complex k) {
 }
 
 void table_reverse(data_str table[], size_t size) {
-    for (size_t i = 0; i < size / 2; i++) {
+    for (size_t i = 0; i < size / 2; ++i) {
         data_str temp = table[i];
         table[i] = table[size - i - 1];
         table[size - i - 1] = temp;
@@ -68,7 +73,7 @@ void table_reverse(data_str table[], size_t size) {
 
 void table_rand(data_str table[], size_t size) {
     srand(time(NULL));
-    for(size_t  i = 0; i < size; i++) {
+    for(size_t  i = 0; i < size - 1; ++i) {
         int randIndex = rand() % size;
         data_str temp = table[i];
         table[i] = table[randIndex];
