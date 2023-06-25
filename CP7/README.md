@@ -38,6 +38,7 @@ ___Интерпретатор команд___ bash, ___версия___ 5.0.11(1)
 ___Редактор текстов___ nano, ___версия___ 4.8
 
 ### 6. Идея, метод, алгоритм решения
+```
 Реализуем следующие функции:  
 Matrix* init();  
 void free_matrix(Matrix* m);  
@@ -51,6 +52,7 @@ Matrix* transpose(Matrix *m);
 Matrix* transpose_by_side_diagonal(Matrix *m);  
 bool matrices_equal(Matrix *m1, Matrix *m2);  
 Matrix* negative_matrix(Matrix *m);  
+```
 
 ### 7. Сценарий выполнения работы
 ```
