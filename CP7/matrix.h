@@ -16,7 +16,6 @@ typedef struct{
 Matrix* init();
 void free_matrix(Matrix* m);
 void push_back(Matrix* m, int element);
-int pop_back(Matrix* m);
 bool enter(Matrix* m, char* filename);
 void print(Matrix *m);
 void print_inner(Matrix *m);
